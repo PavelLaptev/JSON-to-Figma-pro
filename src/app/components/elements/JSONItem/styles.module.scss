@@ -1,0 +1,32 @@
+.row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--s-space);
+
+  &:hover {
+    .labelTag {
+      display: flex;
+    }
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-space);
+}
+
+.label {
+  user-select: none;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  margin: 0;
+  hyphens: none;
+  word-break: keep-all;
+}
+
+.labelTag {
+  display: none;
+}

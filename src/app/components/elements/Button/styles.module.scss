@@ -1,0 +1,87 @@
+.button {
+  user-select: none;
+  outline: none;
+  border: var(--border);
+  border-radius: var(--radius-m);
+  padding: var(--xs-space) var(--s-space);
+  display: flex;
+  gap: var(--s-space);
+  align-items: center;
+  justify-content: center;
+  min-height: var(--btn-input-height);
+  min-width: 40px;
+  transition: all var(--transition-m);
+
+  span {
+    font-size: 13px;
+    font-weight: 700;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.fileButton {
+  input {
+    display: none;
+  }
+}
+
+.primary {
+  background-color: var(--clr-main);
+  color: var(--clr-white);
+
+  svg {
+    fill: var(--clr-white);
+  }
+
+  &:hover {
+    background: var(--clr-accent-dark);
+    box-shadow: 0 2px 0 var(--clr-main);
+  }
+
+  &:active {
+    background: var(--clr-accent-dark);
+    box-shadow: 0 0 0 var(--clr-main);
+    transform: translateY(0);
+  }
+}
+
+.outline {
+  background-color: transparent;
+  color: var(--clr-main);
+
+  svg {
+    fill: var(--clr-main);
+  }
+
+  &:hover {
+    border: 2px solid var(--clr-main);
+    box-shadow: 0 2px 0 var(--clr-main);
+  }
+}
+
+.active {
+  background: var(--clr-accent-main);
+  color: var(--clr-white);
+  border: var(--border);
+  box-shadow: 0 2px 0 var(--clr-main);
+  transform: translateY(-2px);
+
+  svg {
+    fill: var(--clr-white);
+  }
+
+  &:hover {
+    background: var(--clr-accent-semidark);
+  }
+
+  &:active {
+    background: var(--clr-accent-semidark);
+    box-shadow: 0 0 0 var(--clr-main);
+    transform: translateY(0);
+  }
+}

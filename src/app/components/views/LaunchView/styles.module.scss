@@ -1,0 +1,50 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--clr-gray);
+  padding: var(--l-space);
+}
+
+.head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--s-space);
+}
+
+.logo {
+  pointer-events: none;
+  user-select: none;
+  width: 100%;
+}
+
+.links {
+  position: relative;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--m-space);
+}
+
+.buttonsSection {
+  position: relative;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--s-space);
+
+  > :first-child {
+    margin-bottom: var(--s-space);
+  }
+}
+
+.caption {
+  margin: var(--xs-space);
+  user-select: none;
+  color: var(--clr-main);
+  text-align: center;
+}

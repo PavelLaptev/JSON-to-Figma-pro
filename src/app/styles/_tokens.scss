@@ -1,0 +1,28 @@
+:root {
+  --clr-accent-light: #f3e8ff;
+  --clr-accent-main: #ccb4ff;
+  --clr-accent-semidark: #9a82cd;
+  --clr-accent-dark: #7c54d1;
+
+  --clr-main: #000;
+  --clr-white: rgb(255, 255, 255);
+
+  --clr-gray: #f3f3f3;
+
+  --clr-link-hover: #ff2b2b;
+  --clr-caption: rgba(0, 0, 0, 0.6);
+  //
+  --btn-input-height: 36px;
+  --border: 2px solid var(--clr-main);
+  --elevation: 2px;
+  //
+  --xs-space: 4px;
+  --s-space: 8px;
+  --m-space: 16px;
+  --l-space: 20px;
+  --xl-space: 28px;
+  //
+  --radius-m: 6px;
+  //
+  --transition-m: 0.1s ease;
+}

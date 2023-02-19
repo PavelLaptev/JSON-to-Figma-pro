@@ -1,0 +1,15 @@
+.wrap {
+  display: flex;
+  gap: var(--s-space);
+  padding: 0 16px 16px;
+}
+
+.button {
+  flex: 1;
+}
+
+.icon {
+  i {
+    margin-left: 0;
+  }
+}

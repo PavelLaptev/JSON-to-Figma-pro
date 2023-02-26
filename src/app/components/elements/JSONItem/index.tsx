@@ -18,6 +18,7 @@ interface Props {
 
 const JSONItem: React.FC<Props> = (props) => {
   const [isChecked, setIsChecked] = React.useState(props.checked);
+  const [nameCopied, setNameCopied] = React.useState(false);
 
   React.useEffect(() => {
     setIsChecked(props.checked);
@@ -36,13 +37,17 @@ const JSONItem: React.FC<Props> = (props) => {
 
   const handleNameClick = () => {
     if (props.type === "item") {
-      // copy id to clipboard
-      execCopyToClipboard(props.id);
+      setNameCopied(true);
+
+      // remove first word before dot
+      const name = props.id.split(".").slice(1).join(".");
+
+      execCopyToClipboard(name);
       parent.postMessage(
         {
           pluginMessage: {
             type: "copy",
-            text: `layer name "${props.id}" copied`,
+            text: `layer name "${name}" copied`,
           },
         },
         "*"
@@ -50,12 +55,24 @@ const JSONItem: React.FC<Props> = (props) => {
     }
   };
 
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setNameCopied(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [nameCopied]);
+
   return (
     <section className={styles.row}>
       <div className={styles.item}>
         <Checkbox
-          className={styles.checkbox}
-          label={props.label}
+          className={`${styles.checkbox} ${
+            nameCopied && !isChecked ? styles.copied : ""
+          }
+          ${isChecked && nameCopied ? styles.copiedChecked : ""}
+          `}
+          label={props.id.split(".").slice(1).join(".")}
           id={props.id}
           type={props.type}
           checked={isChecked}
@@ -68,7 +85,7 @@ const JSONItem: React.FC<Props> = (props) => {
       {props.type === "item" && (
         <div
           className={styles.labelTag}
-          title="Copy full name"
+          title="Copy populate name"
           onClick={handleNameClick}
         >
           <Icon name="copy" />

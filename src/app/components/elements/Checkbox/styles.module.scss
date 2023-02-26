@@ -1,8 +1,9 @@
 .wrap {
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 28px;
+  height: 25px;
   padding: 6px;
   gap: 8px;
   border-radius: var(--xs-space);

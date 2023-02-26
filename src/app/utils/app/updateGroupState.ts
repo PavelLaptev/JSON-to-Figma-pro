@@ -36,7 +36,7 @@ export default function updateGroupState(
     }
 
     if (overallChecked > 0 && overallChecked < childrenLength) {
-      console.log("indeterminate");
+      // console.log("indeterminate");
       parentGroup.checked = false;
       parentGroup.indeterminate = true;
     }

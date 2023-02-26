@@ -2,7 +2,7 @@
   display: flex;
   flex: 1;
   align-items: center;
-  gap: var(--s-space);
+  gap: var(--xs-space);
 
   &:hover {
     .labelTag {
@@ -18,5 +18,59 @@
 }
 
 .labelTag {
+  position: relative;
   display: none;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 28px;
+  border-radius: var(--radius-m);
+  background-color: var(--clr-white);
+
+  &:hover {
+    .labelTagCaption {
+      display: flex;
+    }
+  }
+}
+
+.labelTagCaption {
+  z-index: 10;
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  font-size: 11px;
+  color: var(--clr-white);
+  background-color: var(--clr-main);
+  white-space: nowrap;
+  padding: 4px 6px;
+  bottom: -25px;
+  left: 0;
+  border-radius: var(--radius-m);
+}
+
+.copied {
+  animation: copied 0.5s ease-in;
+}
+
+@keyframes copied {
+  0% {
+    background-color: rgb(244, 223, 102);
+  }
+  100% {
+    background-color: rgba(255, 247, 0, 0);
+  }
+}
+
+.copiedChecked {
+  animation: copiedChecked 0.5s ease-in;
+}
+
+@keyframes copiedChecked {
+  0% {
+    background-color: rgb(244, 223, 102);
+  }
+  100% {
+    background-color: var(--clr-accent-main);
+  }
 }

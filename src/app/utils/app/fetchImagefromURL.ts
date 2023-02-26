@@ -7,20 +7,27 @@ export default async function fetchImagefromURL(url, targetID) {
     })
     .then((blob) => {
       const blobImg = URL.createObjectURL(blob);
+      const isFileSVG = blob.type.includes("svg");
 
       // convert blobl to png
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
+
       const img = new Image();
       img.src = blobImg;
       img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
+        // set canvas size
+        if (isFileSVG) {
+          canvas.width = img.width * 2;
+          canvas.height = img.height * 2;
+        } else {
+          canvas.width = img.width;
+          canvas.height = img.height;
+        }
+
+        // draw image
         ctx.drawImage(img, 0, 0);
         canvas.toBlob((blob) => {
-          const blobImg = URL.createObjectURL(blob);
-          console.log(blobImg);
-
           // blob to arrayBuffer
           const reader = new FileReader();
           reader.readAsArrayBuffer(blob);

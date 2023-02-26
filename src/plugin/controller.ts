@@ -132,7 +132,7 @@ figma.ui.onmessage = (msg) => {
     figma.ui.resize(pluginFrameSize.width, Math.round(msg.frameHeight));
   }
   if (msg.type === "manual-resize") {
-    figma.ui.resize(Math.round(msg.size.width), Math.round(msg.size.height));
+    figma.ui.resize(pluginFrameSize.width, Math.round(msg.size.height));
   }
 
   // STORAGE WORKAROUND

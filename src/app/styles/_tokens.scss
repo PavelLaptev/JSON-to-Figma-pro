@@ -1,13 +1,15 @@
 :root {
   --clr-accent-light: #f3e8ff;
   --clr-accent-main: #ccb4ff;
+  --clr-accent-lightdark: #b9a0f1;
   --clr-accent-semidark: #9a82cd;
   --clr-accent-dark: #7c54d1;
 
   --clr-main: #000;
   --clr-white: rgb(255, 255, 255);
 
-  --clr-gray: #f3f3f3;
+  --clr-gray: rgba(0, 0, 0, 0.06);
+  --clr-darkgray: rgba(0, 0, 0, 0.1);
 
   --clr-link-hover: #ff2b2b;
   --clr-caption: rgba(0, 0, 0, 0.6);

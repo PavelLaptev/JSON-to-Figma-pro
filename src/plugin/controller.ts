@@ -67,7 +67,12 @@ figma.ui.onmessage = (msg) => {
         configData.range
       );
 
-      configData.checkedItems.map((selectedItem) => {
+      // remove first word before dot
+      const selectedArray = configData.checkedItems.map((item) =>
+        item.split(".").slice(1).join(".")
+      );
+
+      selectedArray.map((selectedItem) => {
         populateByLayerName(selection, modifiedData, selectedItem);
       });
     }

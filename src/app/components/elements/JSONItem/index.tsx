@@ -1,6 +1,7 @@
 import * as React from "react";
 import { execCopyToClipboard } from "../../../utils/app";
 import Icon from "../Icon";
+import Checkbox from "../Checkbox";
 
 import styles from "./styles.module.scss";
 
@@ -16,19 +17,11 @@ interface Props {
 }
 
 const JSONItem: React.FC<Props> = (props) => {
-  const checkboxRef = React.useRef<HTMLInputElement>(null);
   const [isChecked, setIsChecked] = React.useState(props.checked);
 
   React.useEffect(() => {
     setIsChecked(props.checked);
   }, [props.checked]);
-
-  React.useEffect(() => {
-    if (checkboxRef.current && props.type === "group") {
-      // console.log("indeterminate", props.indeterminate);
-      checkboxRef.current.indeterminate = props.indeterminate;
-    }
-  }, [props.indeterminate]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
@@ -60,22 +53,16 @@ const JSONItem: React.FC<Props> = (props) => {
   return (
     <section className={styles.row}>
       <div className={styles.item}>
-        <input
-          ref={checkboxRef}
-          id={props.id}
-          type="checkbox"
+        <Checkbox
           className={styles.checkbox}
+          label={props.label}
+          id={props.id}
+          type={props.type}
           checked={isChecked}
           onChange={handleChange}
+          indeterminate={props.indeterminate}
         />
-        <label
-          htmlFor={props.id}
-          className={styles.label}
-          data-id={props.id}
-          data-type={props.type}
-        >
-          {props.label}
-        </label>
+
         {props.isImage && <Icon name="image" />}
       </div>
       {props.type === "item" && (

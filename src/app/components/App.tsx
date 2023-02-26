@@ -48,7 +48,10 @@ const App = () => {
         parentId: null,
         expanded: true,
         indeterminate: false,
-        children: convertObjectToStates(convertedArraysJSON[0]),
+        children: convertObjectToStates(
+          convertedArraysJSON[0],
+          "rootJSONItems"
+        ),
       } as JSONItemType,
     };
 

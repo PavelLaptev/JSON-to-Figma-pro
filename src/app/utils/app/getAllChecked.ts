@@ -3,6 +3,7 @@ const getAllChecked = (obj: JSONItemType) => {
   const getChecked = (obj: JSONItemType) => {
     Object.values(obj).map((item: JSONItemType) => {
       if (item.checked && item.type === "item") {
+        // remove first word before dot
         selectedArray.push(item.id);
       }
       if (item.type === "group") {

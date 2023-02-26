@@ -1,9 +1,6 @@
 // replace all object values with a new value
 import { isImageString } from "./";
-export default function convertObjectToStates(
-  obj: any,
-  parentName: any = "rootJSONItems"
-) {
+export default function convertObjectToStates(obj: any, parentName: any) {
   const objCopy = { ...obj };
 
   Object.keys(objCopy).forEach((key) => {
@@ -12,7 +9,7 @@ export default function convertObjectToStates(
     if (typeof objCopy[key] === "object") {
       objCopy[key] = {
         type: "group",
-        id: flattenName.split(".")?.splice(1).join("."),
+        id: flattenName,
         parentId: parentName,
         keyName: key,
         checked: false,
@@ -23,7 +20,7 @@ export default function convertObjectToStates(
     } else {
       objCopy[key] = {
         type: "item",
-        id: flattenName.split(".")?.splice(1).join("."),
+        id: flattenName,
         parentId: parentName,
         keyName: key,
         checked: false,

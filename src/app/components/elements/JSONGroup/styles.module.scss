@@ -1,12 +1,72 @@
 .group {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
-  border: 1px solid #9e9e9e;
+  gap: var(--xs-space);
+  padding-left: 8px;
+  --lineShift: 30px;
+
+  &:after {
+    pointer-events: none;
+    position: absolute;
+    content: "";
+    display: block;
+    left: 13px;
+    top: var(--lineShift);
+    opacity: 0.4;
+    width: 2px;
+    height: calc(100% - var(--lineShift));
+    background: repeating-linear-gradient(
+      0deg,
+      var(--clr-main) 0 2px,
+      #0000 0 7px
+    );
+  }
+
+  &:first-child {
+    padding-left: 0;
+
+    &:after {
+      left: 5px;
+    }
+  }
+}
+
+.children {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--xs-space);
+  padding-left: 17px;
 }
 
 .label {
   display: flex;
+  gap: 5px;
+}
+
+.expandButton {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  width: 12px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+.expandIcon {
+  width: 8px;
+  height: 8px;
+  transition: transform 0.15s ease;
+
+  path {
+    fill: var(--clr-main);
+  }
 }
 
 .hide {

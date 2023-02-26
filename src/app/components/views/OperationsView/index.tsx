@@ -38,15 +38,12 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
 
     // find the item
     const item = findObjItem(newState, id) as JSONItemType;
-    const parentGroup = findObjItem(newState, item.parentId) as JSONItemType;
-
-    // console.log(item, id);
 
     // update the item
     item.checked = checked;
 
     // update the parent group
-    updateGroupState(parentGroup);
+    updateGroupState(newState, item.parentId);
 
     // update the state
     setConfigData({
@@ -65,7 +62,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     const newState = JSON.parse(JSON.stringify(configData.states));
     // find the item
     const item = findObjItem(newState, id);
-    const parentGroup = findObjItem(newState, item.parentId) as JSONItemType;
+    // const parentGroup = findObjItem(newState, item.parentId) as JSONItemType;
 
     // update the item
     item.checked = checked;
@@ -79,7 +76,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     // check all children
     const checkAllChildren = (children: any) => {
       Object.values(children).map((child: any) => {
-        updateGroupState(parentGroup);
+        updateGroupState(newState, item.parentId);
         child.checked = checked;
 
         if (child.type === "group") {
@@ -168,7 +165,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
   ////// USE EFFECT ////////
   //////////////////////////
   React.useEffect(() => {
-    console.log("configData", configData);
+    // console.log("configData", configData);
 
     parent.postMessage(
       {

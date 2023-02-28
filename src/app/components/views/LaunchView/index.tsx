@@ -1,21 +1,19 @@
 import * as React from "react";
 
-import { Link, Button } from "../../elements";
-import pluginLogo from "../../../assets/jason-logo.png";
+import { Button, ServiceButtons } from "../../elements";
 
 import styles from "./styles.module.scss";
 
 interface Props {
   fileOnChange(event: React.FormEvent<HTMLInputElement>): void;
   urlOnClick(event: React.MouseEvent<HTMLButtonElement>): void;
+  onSettingsClick: () => void;
 }
 
 const LaunchView: React.FC<Props> = (props) => {
   return (
     <main className={styles.wrap}>
-      <section className={styles.head}>
-        <img className={styles.logo} src={pluginLogo} />
-      </section>
+      <section className={styles.head}></section>
 
       <section className={styles.buttonsSection}>
         <Button
@@ -31,22 +29,8 @@ const LaunchView: React.FC<Props> = (props) => {
           onClick={props.urlOnClick}
         />
       </section>
-      <section className={styles.links}>
-        <p className={styles.caption}>
-          Read the{" "}
-          <Link
-            text="documentation"
-            link="https://github.com/PavelLaptev/JSON-to-Figma"
-          />
-        </p>
-        <p className={styles.caption}>
-          <Link
-            text="Support plugin"
-            link="https://www.paypal.com/paypalme/pavellaptev"
-          />{" "}
-          🧑‍💻
-        </p>
-      </section>
+
+      <ServiceButtons onSettingsClick={props.onSettingsClick} />
     </main>
   );
 };

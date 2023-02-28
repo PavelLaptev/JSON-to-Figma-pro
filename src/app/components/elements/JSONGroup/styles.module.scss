@@ -22,13 +22,13 @@
       #0000 0 7px
     );
   }
+}
 
-  &:first-child {
-    padding-left: 0;
+#rootJSONItems {
+  padding-left: 0;
 
-    &:after {
-      left: 5px;
-    }
+  &:after {
+    left: 5px;
   }
 }
 
@@ -47,6 +47,7 @@
 
 .expandButton {
   position: relative;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;

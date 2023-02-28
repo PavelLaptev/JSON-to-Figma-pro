@@ -1,5 +1,4 @@
 import * as React from "react";
-// import Icon from "../Icon";
 import JSONItem from "../JSONItem";
 
 import styles from "./styles.module.scss";
@@ -31,7 +30,10 @@ const JSONGroup: React.FC<Props> = (props) => {
   };
 
   return (
-    <section className={styles.group}>
+    <section
+      className={styles.group}
+      id={props.id === "rootJSONItems" ? styles["rootJSONItems"] : ""}
+    >
       <div className={styles.label}>
         <button className={styles.expandButton} onClick={handleExpand}>
           <svg

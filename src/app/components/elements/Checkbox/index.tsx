@@ -9,6 +9,7 @@ interface Props {
   id: string;
   type?: "group" | "item";
   checked: boolean;
+  isImage?: boolean;
   indeterminate?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -66,12 +67,15 @@ const Checkbox: React.FC<Props> = (props) => {
       >
         {props.label}
       </label>
+
+      {props.isImage && <Icon name="image" />}
     </div>
   );
 };
 
 Checkbox.defaultProps = {
   className: "",
+  isImage: false,
 } as Partial<Props>;
 
 export default Checkbox;

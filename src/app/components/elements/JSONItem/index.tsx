@@ -39,15 +39,12 @@ const JSONItem: React.FC<Props> = (props) => {
     if (props.type === "item") {
       setNameCopied(true);
 
-      // remove first word before dot
-      const name = props.id.split(".").slice(1).join(".");
-
-      execCopyToClipboard(name);
+      execCopyToClipboard(props.id);
       parent.postMessage(
         {
           pluginMessage: {
             type: "copy",
-            text: `layer name "${name}" copied`,
+            text: `layer name "${props.id}" copied`,
           },
         },
         "*"
@@ -72,15 +69,14 @@ const JSONItem: React.FC<Props> = (props) => {
           }
           ${isChecked && nameCopied ? styles.copiedChecked : ""}
           `}
-          label={props.id.split(".").slice(1).join(".")}
+          label={props.id === "rootJSONItems" ? "ROOT" : props.id}
           id={props.id}
           type={props.type}
+          isImage={props.isImage}
           checked={isChecked}
           onChange={handleChange}
           indeterminate={props.indeterminate}
         />
-
-        {props.isImage && <Icon name="image" />}
       </div>
       {props.type === "item" && (
         <div

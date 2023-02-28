@@ -11,11 +11,13 @@ import {
   convertObjectToStates,
   fetchImagefromURL,
 } from "../utils/app";
+import { pluginFrameSize } from "../../data/pluginFrameSize";
 import { LaunchView, OperationsView } from "./views";
 
 console.clear();
 
 const App = () => {
+  const [showSettings, setShowSettings] = React.useState(false);
   const [configData, setConfigData] = React.useState(null) as [
     configDataType,
     any
@@ -48,10 +50,7 @@ const App = () => {
         parentId: null,
         expanded: true,
         indeterminate: false,
-        children: convertObjectToStates(
-          convertedArraysJSON[0],
-          "rootJSONItems"
-        ),
+        children: convertObjectToStates(convertedArraysJSON[0], ""),
       } as JSONItemType,
     };
 
@@ -135,12 +134,43 @@ const App = () => {
     };
   }, []);
 
+  //////////////////
+  // USE EFFECTS ///
+  //////////////////
+
+  React.useEffect(() => {
+    if (showSettings) {
+      parent.postMessage(
+        { pluginMessage: { type: "change-size", frameHeight: 600 } },
+        "*"
+      );
+    } else {
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: "change-size",
+            frameHeight: pluginFrameSize.height,
+          },
+        },
+        "*"
+      );
+    }
+  }, [showSettings]);
+
   //////////////////////////
   // RENDER ////////////////
   //////////////////////////
 
   const handleUIState = () => {
     // console.log(storageStatus, statesJSON);
+    if (showSettings) {
+      return (
+        <div>
+          <button onClick={() => setShowSettings(false)}>Back</button>
+          <h1>Settings</h1>
+        </div>
+      );
+    }
 
     if (storageStatus === "loading" && !configData) {
       return <h1>Storage is loading...</h1>;
@@ -151,6 +181,7 @@ const App = () => {
         <LaunchView
           urlOnClick={fetchUrlLink}
           fileOnChange={handleUploadLocalFile}
+          onSettingsClick={() => setShowSettings(true)}
         />
       );
     }

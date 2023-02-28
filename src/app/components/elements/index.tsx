@@ -10,3 +10,5 @@ export { default as SectionWrapper } from "./SectionWrapper";
 export { default as JSONItem } from "./JSONItem";
 export { default as LabelTag } from "./LabelTag";
 export { default as Tabs } from "./Tabs";
+export { default as Checkbox } from "./Checkbox";
+export { default as ServiceButtons } from "./ServiceButtons";

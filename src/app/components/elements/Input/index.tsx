@@ -5,6 +5,10 @@ interface Props {
   value?: string;
   onChange?(event: React.FormEvent<HTMLInputElement>): void;
   className?: string;
+  type?: "text" | "number";
+  pattern?: string;
+  min?: number;
+  max?: number;
 }
 
 const Input: React.FC<Props> = (props) => {
@@ -14,6 +18,10 @@ const Input: React.FC<Props> = (props) => {
       className={`${styles.input} ${props.className}`}
       onChange={props.onChange}
       value={props.value}
+      type={props.type}
+      pattern={props.pattern}
+      min={props.min}
+      max={props.max}
     />
   );
 };

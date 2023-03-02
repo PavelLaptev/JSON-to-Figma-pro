@@ -12,12 +12,12 @@ import {
   fetchImagefromURL,
 } from "../utils/app";
 import { pluginFrameSize } from "../../data/pluginFrameSize";
-import { LaunchView, OperationsView } from "./views";
+import { LaunchView, OperationsView, SettingsView } from "./views";
 
 console.clear();
 
 const App = () => {
-  const [showSettings, setShowSettings] = React.useState(false);
+  const [showSettings, setShowSettings] = React.useState(true);
   const [configData, setConfigData] = React.useState(null) as [
     configDataType,
     any
@@ -74,7 +74,6 @@ const App = () => {
     fileReader.onload = () => {
       try {
         let obj = JSON.parse(fileReader.result as string);
-
         handleJSON(obj);
       } catch (error) {
         showErrorMsg(
@@ -141,7 +140,7 @@ const App = () => {
   React.useEffect(() => {
     if (showSettings) {
       parent.postMessage(
-        { pluginMessage: { type: "change-size", frameHeight: 600 } },
+        { pluginMessage: { type: "change-size", frameHeight: 390 } },
         "*"
       );
     } else {
@@ -165,10 +164,12 @@ const App = () => {
     // console.log(storageStatus, statesJSON);
     if (showSettings) {
       return (
-        <div>
-          <button onClick={() => setShowSettings(false)}>Back</button>
-          <h1>Settings</h1>
-        </div>
+        <SettingsView
+          onBackClick={() => setShowSettings(false)}
+          onSettingsChange={(settings) => {
+            console.log(settings);
+          }}
+        />
       );
     }
 

@@ -21,14 +21,14 @@ const SectionWrapper: React.FC<Props> = (props) => {
       onClick={props.onClick}
       onChange={props.onChange}
     >
-      {props.title !== null ? (
+      {props.title && (
         <span className={styles.titleWrap}>
           <h3 className={styles.title}>{props.title}</h3>
           {props.LabelTag && (
             <LabelTag className={styles.count} label={`${props.LabelTag}`} />
           )}
         </span>
-      ) : null}
+      )}
       {props.children}
       {props.divider ? <div className={styles.divider} /> : null}
     </section>

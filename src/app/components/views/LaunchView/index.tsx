@@ -24,7 +24,6 @@ const LaunchView: React.FC<Props> = (props) => {
         />
         <Button
           icon="copyLink"
-          title="Copy link and press the button"
           text={"From Clipboard link"}
           onClick={props.urlOnClick}
         />

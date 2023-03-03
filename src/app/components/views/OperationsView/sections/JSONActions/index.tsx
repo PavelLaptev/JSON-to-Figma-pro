@@ -35,7 +35,10 @@ const JSONActions: React.FC<Props> = (props) => {
         onClick={() => {
           props.onRejectClick();
 
-          parent.postMessage({ pluginMessage: { type: "clear-storage" } }, "*");
+          parent.postMessage(
+            { pluginMessage: { type: "clear-json-settings-storage" } },
+            "*"
+          );
         }}
       />
     </section>

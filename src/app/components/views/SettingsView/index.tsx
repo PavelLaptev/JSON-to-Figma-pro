@@ -7,24 +7,20 @@ import {
   Input,
   ElementCaption,
 } from "../../elements";
+import { useEffectAfterMount } from "../../../hooks";
 
 import styles from "./styles.module.scss";
 
 interface Props {
   onBackClick: () => void;
-  onSettingsChange: (settings: {
-    showShortKeyNames: boolean;
-    darkMode: boolean;
-    svgScale: number;
-  }) => void;
+  onSettingsChange: (settings: pluginSettingsType) => void;
+  settings: pluginSettingsType;
 }
 
 const SettingsView: React.FC<Props> = (props) => {
-  const [settings, setSettings] = React.useState({
-    showShortKeyNames: false,
-    darkMode: false,
-    svgScale: 2,
-  });
+  const [settings, setSettings] = React.useState(
+    props.settings as pluginSettingsType
+  );
 
   const handleSVGScaleChange = (e) => {
     // allow only numbers and not bigger than 10 and not less than 1
@@ -44,9 +40,15 @@ const SettingsView: React.FC<Props> = (props) => {
     setSettings({ ...settings, darkMode: checked });
   };
 
-  React.useEffect(() => {
-    props.onSettingsChange(settings);
+  useEffectAfterMount(() => {
+    if (props.settings !== settings) {
+      props.onSettingsChange(settings);
+    }
   }, [settings]);
+
+  useEffectAfterMount(() => {
+    setSettings(props.settings);
+  }, [props.settings]);
 
   return (
     <main className={styles.wrap}>

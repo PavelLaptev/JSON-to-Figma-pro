@@ -170,7 +170,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     parent.postMessage(
       {
         pluginMessage: {
-          type: "set-storage",
+          type: "set-json-settings-storage",
           data: configData as configDataType,
         },
       },

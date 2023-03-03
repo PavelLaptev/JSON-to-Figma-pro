@@ -43,3 +43,9 @@ declare type configDataType = {
   };
   checkedItems?: Array<string>;
 };
+
+declare type pluginSettingsType = {
+  showShortKeyNames: boolean;
+  darkMode: boolean;
+  svgScale: number;
+};

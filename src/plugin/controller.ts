@@ -10,6 +10,8 @@ import { pluginFrameSize } from "../data/pluginFrameSize";
 import { skipSign } from "../data/skipSign";
 
 const pluginName = "JSONtoFigmaPlugin";
+const JSONStorageSection = `${pluginName}-json-settings`;
+const appstorageSection = `${pluginName}-app-settings`;
 
 // CLEAN STORAGE
 // figma.clientStorage.setAsync(pluginName, null);
@@ -131,22 +133,38 @@ figma.ui.onmessage = (msg) => {
   }
 
   // STORAGE WORKAROUND
-  if (msg.type === "set-storage") {
-    // console.log("set-storage", msg);
-    figma.clientStorage.setAsync(pluginName, JSON.stringify(msg.data));
+  // JSON SETTINGS
+  if (msg.type === "set-json-settings-storage") {
+    // console.log("set-json-settings-storage", msg);
+    figma.clientStorage.setAsync(JSONStorageSection, JSON.stringify(msg.data));
   }
 
-  if (msg.type === "get-storage") {
-    figma.clientStorage.getAsync(pluginName).then((data) => {
+  if (msg.type === "get-json-settings-storage") {
+    figma.clientStorage.getAsync(JSONStorageSection).then((data) => {
       figma.ui.postMessage({
-        type: "get-storage",
+        type: "get-json-settings-storage",
         data: JSON.parse(data) as configDataType,
       });
     });
   }
 
-  if (msg.type === "clear-storage") {
-    figma.clientStorage.setAsync(pluginName, null);
+  if (msg.type === "clear-json-settings-storage") {
+    figma.clientStorage.setAsync(JSONStorageSection, null);
+  }
+
+  // APP SETTINGS
+  if (msg.type === "set-app-settings-storage") {
+    // console.log("set-app-settings-storage", msg);
+    figma.clientStorage.setAsync(appstorageSection, JSON.stringify(msg.data));
+  }
+
+  if (msg.type === "get-app-settings-storage") {
+    figma.clientStorage.getAsync(appstorageSection).then((data) => {
+      figma.ui.postMessage({
+        type: "get-app-settings-storage",
+        data: JSON.parse(data) as pluginSettingsType,
+      });
+    });
   }
 };
 

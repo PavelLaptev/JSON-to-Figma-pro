@@ -18,6 +18,10 @@ const Switcher: React.FC<Props> = (props) => {
     props.onChange(e.target.checked);
   };
 
+  React.useEffect(() => {
+    setSwitcherChecked(props.checked);
+  }, [props.checked]);
+
   return (
     <div className={styles.wrap}>
       <input

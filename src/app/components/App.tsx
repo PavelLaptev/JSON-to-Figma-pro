@@ -17,16 +17,18 @@ import { LaunchView, OperationsView, SettingsView } from "./views";
 console.clear();
 
 const App = () => {
-  const [showSettings, setShowSettings] = React.useState(true);
+  const [showAppSettings, setShowAppSettings] = React.useState(true);
+  const [appSettingsConfig, setAppSettingsConfig] = React.useState({
+    showShortKeyNames: false,
+    darkMode: false,
+    svgScale: 2,
+  } as pluginSettingsType);
   const [configData, setConfigData] = React.useState(null) as [
     configDataType,
     any
   ];
 
-  const [storageStatus, setStorageStatus] = React.useState("loading") as [
-    any,
-    any
-  ];
+  const [storageStatus, setStorageStatus] = React.useState("loading") as any;
 
   // Helper function
   const showErrorMsg = (error, errorText) => {
@@ -110,18 +112,23 @@ const App = () => {
   //////////////////////////
 
   React.useEffect(() => {
-    parent.postMessage({ pluginMessage: { type: "get-storage" } }, "*");
+    parent.postMessage(
+      { pluginMessage: { type: "get-json-settings-storage" } },
+      "*"
+    );
+
+    parent.postMessage(
+      { pluginMessage: { type: "get-app-settings-storage" } },
+      "*"
+    );
 
     window.onmessage = (event) => {
       const message = event.data.pluginMessage;
 
       // console.log("get it", event.data);
       // get storage
-      if (message.type === "get-storage") {
-        if (message.data) {
-          setConfigData(message.data);
-        }
-
+      if (message.type === "get-json-settings-storage") {
+        setConfigData(message.data);
         setStorageStatus("empty");
       }
 
@@ -130,15 +137,17 @@ const App = () => {
         // console.log(imgURL);
         fetchImagefromURL(message.url, message.targetID);
       }
+
+      // if app settings detected
+      if (message.type === "get-app-settings-storage") {
+        console.log("get app settings", message.data);
+        setAppSettingsConfig(message.data);
+      }
     };
   }, []);
 
-  //////////////////
-  // USE EFFECTS ///
-  //////////////////
-
   React.useEffect(() => {
-    if (showSettings) {
+    if (showAppSettings) {
       parent.postMessage(
         { pluginMessage: { type: "change-size", frameHeight: 390 } },
         "*"
@@ -154,7 +163,7 @@ const App = () => {
         "*"
       );
     }
-  }, [showSettings]);
+  }, [showAppSettings]);
 
   //////////////////////////
   // RENDER ////////////////
@@ -162,12 +171,22 @@ const App = () => {
 
   const handleUIState = () => {
     // console.log(storageStatus, statesJSON);
-    if (showSettings) {
+    if (showAppSettings) {
       return (
         <SettingsView
-          onBackClick={() => setShowSettings(false)}
-          onSettingsChange={(settings) => {
-            console.log(settings);
+          onBackClick={() => setShowAppSettings(false)}
+          settings={appSettingsConfig}
+          onSettingsChange={(newSettings) => {
+            setAppSettingsConfig(newSettings);
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: "set-app-settings-storage",
+                  data: newSettings,
+                },
+              },
+              "*"
+            );
           }}
         />
       );
@@ -182,7 +201,7 @@ const App = () => {
         <LaunchView
           urlOnClick={fetchUrlLink}
           fileOnChange={handleUploadLocalFile}
-          onSettingsClick={() => setShowSettings(true)}
+          onSettingsClick={() => setShowAppSettings(true)}
         />
       );
     }

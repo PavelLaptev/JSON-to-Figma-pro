@@ -125,11 +125,13 @@ const App = () => {
     window.onmessage = (event) => {
       const message = event.data.pluginMessage;
 
-      // console.log("get it", event.data);
+      console.log("get it", message);
+      // console.log("get json settings", message);
       // get storage
       if (message.type === "get-json-settings-storage") {
-        setConfigData(message.data);
-        setStorageStatus("empty");
+        if (message.data) {
+          setConfigData(message.data);
+        }
       }
 
       // if image detected
@@ -141,8 +143,12 @@ const App = () => {
       // if app settings detected
       if (message.type === "get-app-settings-storage") {
         console.log("get app settings", message.data);
-        setAppSettingsConfig(message.data);
+        if (message.data) {
+          setAppSettingsConfig(message.data);
+        }
       }
+
+      setStorageStatus("empty");
     };
   }, []);
 
@@ -170,7 +176,7 @@ const App = () => {
   //////////////////////////
 
   const handleUIState = () => {
-    // console.log(storageStatus, statesJSON);
+    // console.log(storageStatus, configData);
     if (showAppSettings) {
       return (
         <SettingsView

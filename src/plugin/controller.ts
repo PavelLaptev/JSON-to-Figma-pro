@@ -135,7 +135,6 @@ figma.ui.onmessage = (msg) => {
   // STORAGE WORKAROUND
   // JSON SETTINGS
   if (msg.type === "set-json-settings-storage") {
-    // console.log("set-json-settings-storage", msg);
     figma.clientStorage.setAsync(JSONStorageSection, JSON.stringify(msg.data));
   }
 

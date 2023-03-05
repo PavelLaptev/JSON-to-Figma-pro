@@ -17,14 +17,14 @@ import { LaunchView, OperationsView, SettingsView } from "./views";
 console.clear();
 
 const App = () => {
-  const [showAppSettings, setShowAppSettings] = React.useState(true);
-  const [appSettingsConfig, setAppSettingsConfig] = React.useState({
-    showShortKeyNames: false,
+  const [showAppSettings, setShowAppSettings] = React.useState(false);
+  const [appConfig, setAppConfig] = React.useState({
+    showShortKeyNames: true,
     darkMode: false,
     svgScale: 2,
-  } as pluginSettingsType);
-  const [configData, setConfigData] = React.useState(null) as [
-    configDataType,
+  } as appConfigType);
+  const [JSONconfig, setJSONConfig] = React.useState(null) as [
+    JSONconfigType,
     any
   ];
 
@@ -56,7 +56,7 @@ const App = () => {
       } as JSONItemType,
     };
 
-    setConfigData({
+    setJSONConfig({
       states: convertedToStates,
       originalJSON: flattenedJSON,
       range: {
@@ -104,7 +104,7 @@ const App = () => {
   const onRejectClick = () => {
     parent.postMessage({ pluginMessage: { type: "initial-size" } }, "*");
 
-    setConfigData(null);
+    setJSONConfig(null);
   };
 
   //////////////////////////
@@ -125,32 +125,32 @@ const App = () => {
     window.onmessage = (event) => {
       const message = event.data.pluginMessage;
 
-      console.log("get it", message);
+      // console.log("get it", message);
       // console.log("get json settings", message);
       // get storage
       if (message.type === "get-json-settings-storage") {
         if (message.data) {
-          setConfigData(message.data);
+          setJSONConfig(message.data);
         }
       }
 
       // if image detected
       if (message.type === "image-url") {
         // console.log(imgURL);
-        fetchImagefromURL(message.url, message.targetID);
+        fetchImagefromURL(message.url, message.targetID, appConfig.svgScale);
       }
 
       // if app settings detected
       if (message.type === "get-app-settings-storage") {
         console.log("get app settings", message.data);
         if (message.data) {
-          setAppSettingsConfig(message.data);
+          setAppConfig(message.data);
         }
       }
 
       setStorageStatus("empty");
     };
-  }, []);
+  }, [appConfig.svgScale]);
 
   React.useEffect(() => {
     if (showAppSettings) {
@@ -176,14 +176,14 @@ const App = () => {
   //////////////////////////
 
   const handleUIState = () => {
-    // console.log(storageStatus, configData);
+    // console.log(storageStatus, JSONconfig);
     if (showAppSettings) {
       return (
         <SettingsView
           onBackClick={() => setShowAppSettings(false)}
-          settings={appSettingsConfig}
+          settings={appConfig}
           onSettingsChange={(newSettings) => {
-            setAppSettingsConfig(newSettings);
+            setAppConfig(newSettings);
             parent.postMessage(
               {
                 pluginMessage: {
@@ -198,11 +198,11 @@ const App = () => {
       );
     }
 
-    if (storageStatus === "loading" && !configData) {
+    if (storageStatus === "loading" && !JSONconfig) {
       return <h1>Storage is loading...</h1>;
     }
 
-    if (storageStatus === "empty" && !configData) {
+    if (storageStatus === "empty" && !JSONconfig) {
       return (
         <LaunchView
           urlOnClick={fetchUrlLink}
@@ -212,9 +212,13 @@ const App = () => {
       );
     }
 
-    if (configData) {
+    if (JSONconfig) {
       return (
-        <OperationsView configData={configData} onRejectClick={onRejectClick} />
+        <OperationsView
+          JSONconfig={JSONconfig}
+          onRejectClick={onRejectClick}
+          appConfig={appConfig}
+        />
       );
     }
   };

@@ -1,6 +1,10 @@
 import { proxyServer } from "./proxyServer";
 
-export default async function fetchImagefromURL(url, targetID) {
+export default async function fetchImagefromURL(
+  url,
+  targetID,
+  svgScale: number
+) {
   fetch(`${proxyServer}${url}`)
     .then((res) => {
       return res.blob();
@@ -13,13 +17,15 @@ export default async function fetchImagefromURL(url, targetID) {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
+      console.log("svgScale", svgScale);
+
       const img = new Image();
       img.src = blobImg;
       img.onload = () => {
         // set canvas size
         if (isFileSVG) {
-          canvas.width = img.width * 2;
-          canvas.height = img.height * 2;
+          canvas.width = img.width * svgScale;
+          canvas.height = img.height * svgScale;
         } else {
           canvas.width = img.width;
           canvas.height = img.height;

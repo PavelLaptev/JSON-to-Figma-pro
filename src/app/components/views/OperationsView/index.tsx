@@ -17,24 +17,25 @@ import { useFrameSize } from "../../../hooks";
 import styles from "./styles.module.scss";
 
 interface Props {
-  configData: configDataType;
+  JSONconfig: JSONconfigType;
+  appConfig: appConfigType;
   onRejectClick(): void;
 }
 
 const OperationsView: React.FunctionComponent<Props> = (props) => {
   const mainSectionRef = React.useRef<HTMLDivElement>(null);
 
-  // console.log(props.configData);
+  console.log(props.appConfig);
 
-  const [configData, setConfigData] = React.useState(props.configData);
+  const [JSONconfig, setJSONconfig] = React.useState(props.JSONconfig);
 
-  useFrameSize(mainSectionRef, configData.states);
+  useFrameSize(mainSectionRef, JSONconfig.states);
 
   const handleItemChange = (e: onChangeType) => {
     const { id, checked } = e;
 
     // deep copy
-    const newState = JSON.parse(JSON.stringify(configData.states));
+    const newState = JSON.parse(JSON.stringify(JSONconfig.states));
 
     // find the item
     const item = findObjItem(newState, id) as JSONItemType;
@@ -46,8 +47,8 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     updateGroupState(newState, item.parentId);
 
     // update the state
-    setConfigData({
-      ...configData,
+    setJSONconfig({
+      ...JSONconfig,
       states: newState,
       checkedItems: getAllChecked(newState),
     });
@@ -59,7 +60,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     const { id, checked } = e;
 
     // deep copy
-    const newState = JSON.parse(JSON.stringify(configData.states));
+    const newState = JSON.parse(JSON.stringify(JSONconfig.states));
     // find the item
     const item = findObjItem(newState, id);
     // const parentGroup = findObjItem(newState, item.parentId) as JSONItemType;
@@ -90,8 +91,8 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     checkAllChildren(item.children);
 
     // update the state
-    setConfigData({
-      ...configData,
+    setJSONconfig({
+      ...JSONconfig,
       states: newState,
       checkedItems: getAllChecked(newState),
     });
@@ -103,7 +104,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     const { id, expanded } = e;
 
     // deep copy
-    const newState = JSON.parse(JSON.stringify(configData.states));
+    const newState = JSON.parse(JSON.stringify(JSONconfig.states));
     // find the item
     const item = findObjItem(newState, id);
 
@@ -111,33 +112,33 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
     item.expanded = expanded;
 
     // update the state
-    setConfigData({
-      ...configData,
+    setJSONconfig({
+      ...JSONconfig,
       states: newState,
     });
   };
 
   const handleRandomSwitch = (value: RandomValueTypes) => {
-    setConfigData({
-      ...configData,
+    setJSONconfig({
+      ...JSONconfig,
       randomType: value,
     });
 
-    // console.log(props.configData.originalJSON);
+    // console.log(props.JSONconfig.originalJSON);
   };
 
   const handleRangeChange = (range: { from: number; to: number }) => {
     // console.log(range);
 
-    setConfigData({
-      ...configData,
+    setJSONconfig({
+      ...JSONconfig,
       range: range,
     });
   };
 
   const handlePopulateClick = () => {
     // check if there is any selected item
-    if (configData.checkedItems.length === 0) {
+    if (JSONconfig.checkedItems.length === 0) {
       parent.postMessage(
         {
           pluginMessage: {
@@ -154,7 +155,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
       {
         pluginMessage: {
           type: "populate",
-          data: configData,
+          data: JSONconfig,
         },
       },
       "*"
@@ -165,18 +166,18 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
   ////// USE EFFECT ////////
   //////////////////////////
   React.useEffect(() => {
-    // console.log("configData", configData);
+    // console.log("JSONconfig", JSONconfig);
 
     parent.postMessage(
       {
         pluginMessage: {
           type: "set-json-settings-storage",
-          data: configData as configDataType,
+          data: JSONconfig as JSONconfigType,
         },
       },
       "*"
     );
-  }, [configData]);
+  }, [JSONconfig]);
 
   //////////////////////////
   ////// RENDER ////////////
@@ -186,6 +187,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
 
     return values.map((value: any, index) => {
       // console.log(value);
+
       if (value.children) {
         return (
           <JSONGroup
@@ -204,7 +206,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
       } else {
         return (
           <JSONItem
-            label={value.keyName}
+            label={props.appConfig.showShortKeyNames ? value.keyName : value.id}
             id={value.id}
             key={index}
             checked={value.checked}
@@ -221,25 +223,25 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
       <Resizer />
 
       <section className={styles.head}>
-        <div className={styles.list}>{createNestedJSON(configData.states)}</div>
+        <div className={styles.list}>{createNestedJSON(JSONconfig.states)}</div>
 
         <JSONActions
           onRejectClick={props.onRejectClick}
           onPopulateClick={handlePopulateClick}
-          selectedCount={configData.checkedItems.length}
+          selectedCount={JSONconfig.checkedItems.length}
         />
       </section>
 
       <RandomSwitcher
         onChange={handleRandomSwitch}
-        defaultActiveTab={configData.randomType}
+        defaultActiveTab={JSONconfig.randomType}
       />
       <SelectRange
-        max={props.configData.originalJSON.length}
+        max={props.JSONconfig.originalJSON.length}
         onChange={(val) => {
           handleRangeChange(val);
         }}
-        value={`${configData.range.from}-${configData.range.to}`}
+        value={`${JSONconfig.range.from}-${JSONconfig.range.to}`}
       />
       <SkipLayers />
     </main>

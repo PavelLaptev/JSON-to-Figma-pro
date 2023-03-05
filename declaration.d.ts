@@ -33,7 +33,7 @@ declare type JSONItemType = {
   children?: JSONItemType;
 };
 
-declare type configDataType = {
+declare type JSONconfigType = {
   states: JSONItemType | null;
   originalJSON: any;
   randomType: RandomValueTypes;
@@ -44,7 +44,7 @@ declare type configDataType = {
   checkedItems?: Array<string>;
 };
 
-declare type pluginSettingsType = {
+declare type appConfigType = {
   showShortKeyNames: boolean;
   darkMode: boolean;
   svgScale: number;

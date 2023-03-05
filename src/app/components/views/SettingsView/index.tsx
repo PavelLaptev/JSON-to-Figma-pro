@@ -13,13 +13,13 @@ import styles from "./styles.module.scss";
 
 interface Props {
   onBackClick: () => void;
-  onSettingsChange: (settings: pluginSettingsType) => void;
-  settings: pluginSettingsType;
+  onSettingsChange: (settings: appConfigType) => void;
+  settings: appConfigType;
 }
 
 const SettingsView: React.FC<Props> = (props) => {
   const [settings, setSettings] = React.useState(
-    props.settings as pluginSettingsType
+    props.settings as appConfigType
   );
 
   const handleSVGScaleChange = (e) => {

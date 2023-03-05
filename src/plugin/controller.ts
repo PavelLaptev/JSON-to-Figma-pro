@@ -11,7 +11,7 @@ import { skipSign } from "../data/skipSign";
 
 const pluginName = "JSONtoFigmaPlugin";
 const JSONStorageSection = `${pluginName}-json-settings`;
-const appstorageSection = `${pluginName}-app-settings`;
+const appStorageSection = `${pluginName}-app-settings`;
 
 // CLEAN STORAGE
 // figma.clientStorage.setAsync(pluginName, null);
@@ -54,22 +54,21 @@ figma.ui.onmessage = (msg) => {
 
   if (msg.type === "populate") {
     const selection = figma.currentPage.selection;
-    const configData = msg.data as configDataType;
-    // console.log("configData", configData);
+    const JSONconfig = msg.data as JSONconfigType;
+    // console.log("JSONconfig", JSONconfig);
 
     // Check if something selected
-
     // POPULATE
     if (!isSelectionLength) {
       figmaNotify("error", `Select something to populate matches`, 3000);
     } else {
       const modifiedData = applyOptions(
-        configData.originalJSON,
-        configData.randomType,
-        configData.range
+        JSONconfig.originalJSON,
+        JSONconfig.randomType,
+        JSONconfig.range
       );
 
-      configData.checkedItems.map((selectedItem) => {
+      JSONconfig.checkedItems.map((selectedItem) => {
         populateByLayerName(selection, modifiedData, selectedItem);
       });
     }
@@ -142,7 +141,7 @@ figma.ui.onmessage = (msg) => {
     figma.clientStorage.getAsync(JSONStorageSection).then((data) => {
       figma.ui.postMessage({
         type: "get-json-settings-storage",
-        data: JSON.parse(data) as configDataType,
+        data: JSON.parse(data) as JSONconfigType,
       });
     });
   }
@@ -154,14 +153,14 @@ figma.ui.onmessage = (msg) => {
   // APP SETTINGS
   if (msg.type === "set-app-settings-storage") {
     // console.log("set-app-settings-storage", msg);
-    figma.clientStorage.setAsync(appstorageSection, JSON.stringify(msg.data));
+    figma.clientStorage.setAsync(appStorageSection, JSON.stringify(msg.data));
   }
 
   if (msg.type === "get-app-settings-storage") {
-    figma.clientStorage.getAsync(appstorageSection).then((data) => {
+    figma.clientStorage.getAsync(appStorageSection).then((data) => {
       figma.ui.postMessage({
         type: "get-app-settings-storage",
-        data: JSON.parse(data) as pluginSettingsType,
+        data: JSON.parse(data) as appConfigType,
       });
     });
   }

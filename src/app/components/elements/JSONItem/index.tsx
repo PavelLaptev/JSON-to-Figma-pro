@@ -69,7 +69,7 @@ const JSONItem: React.FC<Props> = (props) => {
           }
           ${isChecked && nameCopied ? styles.copiedChecked : ""}
           `}
-          label={props.id === "rootJSONItems" ? "ROOT" : props.id}
+          label={props.id === "rootJSONItems" ? "ROOT" : props.label}
           id={props.id}
           type={props.type}
           isImage={props.isImage}

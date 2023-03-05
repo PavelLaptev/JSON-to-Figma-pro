@@ -19,7 +19,7 @@ console.clear();
 const App = () => {
   const [showAppSettings, setShowAppSettings] = React.useState(false);
   const [appConfig, setAppConfig] = React.useState({
-    showShortKeyNames: true,
+    showShortKeyNames: false,
     darkMode: false,
     svgScale: 2,
   } as appConfigType);

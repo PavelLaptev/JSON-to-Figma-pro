@@ -24,15 +24,18 @@ export default async function fetchImagefromURL(
       img.onload = () => {
         // set canvas size
         if (isFileSVG) {
+          // resize canvas to svg size
           canvas.width = img.width * svgScale;
           canvas.height = img.height * svgScale;
+          ctx.drawImage(img, 0, 0, img.width * svgScale, img.height * svgScale);
         } else {
           canvas.width = img.width;
           canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
         }
 
         // draw image
-        ctx.drawImage(img, 0, 0);
+        // ctx.drawImage(img, 0, 0);
         canvas.toBlob((blob) => {
           // blob to arrayBuffer
           const reader = new FileReader();
@@ -55,43 +58,4 @@ export default async function fetchImagefromURL(
         }, "image/png");
       };
     });
-
-  //   const arrayBuffer = await response.arrayBuffer();
-  //   const uint8Array = new Uint8Array(arrayBuffer);
-
-  //   parent.postMessage(
-  //     {
-  //       pluginMessage: {
-  //         type: "imgData",
-  //         data: uint8Array,
-  //         targetID: targetID,
-  //       },
-  //     },
-  //     "*"
-  //   );
 }
-
-// export default async function fetchImagefromURL(url, targetID) {
-//     await fetch(`${proxyServer}/${url}`)
-//       .then((r) => {
-//         try {
-//           console.log(r);
-//           return r.arrayBuffer();
-//         } catch (error) {
-//           console.error(error);
-//         }
-//       })
-//       .then((a) => {
-//         console.log(a);
-//         parent.postMessage(
-//           {
-//             pluginMessage: {
-//               type: "imgData",
-//               data: new Uint8Array(a),
-//               targetID: targetID,
-//             },
-//           },
-//           "*"
-//         );
-//       });
-//   }

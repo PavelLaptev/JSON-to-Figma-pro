@@ -6,7 +6,7 @@
 
   &:hover {
     .labelTag {
-      display: flex;
+      opacity: 1;
     }
   }
 }
@@ -20,13 +20,14 @@
 .labelTag {
   flex-shrink: 0;
   position: relative;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   height: 25px;
   width: 28px;
   border-radius: var(--radius-m);
   background-color: var(--clr-white);
+  opacity: 0;
 
   &:hover {
     .labelTagCaption {

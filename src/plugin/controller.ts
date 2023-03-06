@@ -121,14 +121,17 @@ figma.ui.onmessage = (msg) => {
   }
 
   // CHANGE SIZE
+  const maximumPluginHeight = figma.viewport.bounds.height - 100;
+
   if (msg.type === "initial-size") {
     figma.ui.resize(pluginFrameSize.width, pluginFrameSize.height);
   }
-  if (msg.type === "change-size" || msg.type === "reset") {
-    figma.ui.resize(pluginFrameSize.width, Math.round(msg.frameHeight));
-  }
-  if (msg.type === "manual-resize") {
-    figma.ui.resize(pluginFrameSize.width, Math.round(msg.size.height));
+  if (msg.type === "change-size") {
+    if (msg.frameHeight > maximumPluginHeight) {
+      figma.ui.resize(pluginFrameSize.width, maximumPluginHeight);
+    } else {
+      figma.ui.resize(pluginFrameSize.width, Math.round(msg.frameHeight));
+    }
   }
 
   // STORAGE WORKAROUND

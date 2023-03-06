@@ -6,7 +6,7 @@ import {
   RandomSwitcher,
   SelectRange,
 } from "./sections";
-import { JSONGroup, JSONItem, Resizer } from "../../elements";
+import { JSONGroup, JSONItem } from "../../elements";
 import {
   findObjItem,
   updateGroupState,
@@ -220,8 +220,6 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
 
   return (
     <main className={styles.wrap} ref={mainSectionRef}>
-      <Resizer />
-
       <section className={styles.head}>
         <div className={styles.list}>{createNestedJSON(JSONconfig.states)}</div>
 

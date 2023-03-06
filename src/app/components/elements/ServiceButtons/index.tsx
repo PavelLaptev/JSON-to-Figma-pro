@@ -3,7 +3,7 @@ import * as React from "react";
 import styles from "./styles.module.scss";
 
 interface Props {
-  onSettingsClick?: () => void;
+  onSettingsClick: () => void;
 }
 
 const ServiceButtons: React.FC<Props> = (props) => {

@@ -216,8 +216,8 @@ const App = () => {
       return (
         <OperationsView
           JSONconfig={JSONconfig}
-          onRejectClick={onRejectClick}
           appConfig={appConfig}
+          onRejectClick={onRejectClick}
         />
       );
     }

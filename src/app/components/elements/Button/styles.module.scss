@@ -31,20 +31,20 @@
 }
 
 .primary {
-  background-color: var(--clr-main);
-  color: var(--clr-white);
+  background-color: var(--primary-btn-background);
+  color: var(--primary-btn-text-color);
 
   svg {
-    fill: var(--clr-white);
+    fill: var(--primary-btn-text-color);
   }
 
   &:hover {
-    background: var(--clr-accent-dark);
+    background: var(--primary-btn-background-hover);
     box-shadow: 0 2px 0 var(--clr-main);
   }
 
   &:active {
-    background: var(--clr-accent-dark);
+    background: var(--primary-btn-background-hover);
     box-shadow: 0 0 0 var(--clr-main);
     transform: translateY(0);
   }

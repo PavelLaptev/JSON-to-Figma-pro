@@ -1,23 +1,25 @@
-@import './tokens';
-@import './fonts';
+@import "./tokens";
+@import "./fonts";
 
 *,
 *:before,
 *:after {
-    box-sizing: border-box;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    text-align: center;
-    margin: 0;
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-        width: 0;
-        background: transparent;
-    }
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+  overflow-x: hidden;
+  background-color: var(--clr-background);
+
+  &::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 }

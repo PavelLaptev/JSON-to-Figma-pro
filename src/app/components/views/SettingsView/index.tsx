@@ -83,7 +83,7 @@ const SettingsView: React.FC<Props> = (props) => {
         <SectionWrapper title="">
           <Switcher
             id="dark-mode"
-            label="Enable dark mode 🌚"
+            label="Enable dark mode"
             checked={settings.darkMode}
             onChange={handleDarkModeChange}
           />

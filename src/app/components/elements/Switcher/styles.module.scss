@@ -14,7 +14,7 @@
       transform: translateY(-50%);
       top: 50%;
       left: 0;
-      border: var(--border);
+      border: 2px solid var(--switcher-border-color);
       background: transparent;
       border-radius: 50px;
       transition: all var(--transition-m);

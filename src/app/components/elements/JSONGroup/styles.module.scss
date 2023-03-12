@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--xs-space);
-  padding-left: 8px;
+  // padding-left: 8px;
   width: fit-content;
   --lineShift: 30px;
 
@@ -12,7 +12,7 @@
     position: absolute;
     content: "";
     display: block;
-    left: 13px;
+    left: 5px;
     top: var(--lineShift);
     opacity: 0.4;
     width: 2px;
@@ -38,7 +38,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--xs-space);
-  padding-left: 17px;
+  padding-left: 25px;
 }
 
 .label {
@@ -46,30 +46,30 @@
   gap: 5px;
 }
 
-.expandButton {
-  position: relative;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 28px;
-  width: 12px;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: none;
-}
+// .expandButton {
+//   position: relative;
+//   flex-shrink: 0;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 28px;
+//   width: 12px;
+//   overflow: hidden;
+//   padding: 0;
+//   margin: 0;
+//   border: none;
+//   background: none;
+// }
 
-.expandIcon {
-  width: 8px;
-  height: 8px;
-  transition: transform 0.15s ease;
+// .expandIcon {
+//   width: 8px;
+//   height: 8px;
+//   transition: transform 0.15s ease;
 
-  path {
-    fill: var(--clr-main);
-  }
-}
+//   path {
+//     fill: var(--clr-main);
+//   }
+// }
 
 .hide {
   display: none;

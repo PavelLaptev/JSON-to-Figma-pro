@@ -6,14 +6,23 @@
   --clr-accent-dark: #7c54d1;
 
   --clr-main: #000;
-  --clr-white: rgb(255, 255, 255);
+  --clr-white: #fff;
+
+  --clr-text: #000;
+  --clr-checkbox-border: var(--clr-main);
 
   --clr-gray: rgba(0, 0, 0, 0.06);
   --clr-darkgray: rgba(0, 0, 0, 0.1);
 
-  --clr-link-hover: #ff2b2b;
   --clr-caption: rgba(0, 0, 0, 0.6);
-  //
+  --clr-background: var(--clr-white);
+
+  --primary-btn-background: var(--clr-main);
+  --primary-btn-text-color: var(--clr-white);
+  --primary-btn-background-hover: var(--clr-accent-dark);
+
+  --switcher-border-color: var(--clr-main);
+
   --btn-input-height: 36px;
   --border: 2px solid var(--clr-main);
   --elevation: 2px;
@@ -27,4 +36,32 @@
   --radius-m: 6px;
   //
   --transition-m: 0.1s ease;
+}
+
+.dark-theme {
+  --clr-accent-dark: #e8d8f9;
+  --clr-accent-semidark: #ccb4ff;
+  --clr-accent-lightdark: #b9a0f1;
+  --clr-accent-main: #9a82cd;
+  --clr-accent-light: #7c54d1;
+
+  --clr-main: #e8d8f9;
+  --clr-white: rgb(33, 33, 33);
+
+  --clr-text: #fff;
+  --clr-checkbox-border: var(--clr-main);
+
+  --primary-btn-background: var(--clr-background);
+  --primary-btn-text-color: var(--clr-main);
+  --primary-btn-background-hover: var(--clr-background);
+
+  --switcher-border-color: var(--clr-accent-main);
+
+  --clr-gray: rgba(255, 255, 255, 0.1);
+  --clr-darkgray: rgba(255, 255, 255, 0.25);
+
+  --clr-caption: rgba(255, 255, 255, 0.6);
+  --clr-background: var(--clr-white);
+
+  --border: 2px solid var(--clr-main);
 }

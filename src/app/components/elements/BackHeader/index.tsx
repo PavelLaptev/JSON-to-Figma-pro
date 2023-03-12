@@ -12,7 +12,11 @@ const BackHeader: React.FC<Props> = (props) => {
   return (
     <div className={`${styles.wrap} ${props.className}`}>
       <div className={styles.iconWrap} onClick={props.onBackClick}>
-        <Icon name="back-arrow" className={styles.icon} />
+        <Icon
+          name="back-arrow"
+          className={styles.icon}
+          color="var(--clr-text)"
+        />
       </div>
       <span className={styles.title}>{props.title}</span>
     </div>

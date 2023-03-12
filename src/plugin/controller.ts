@@ -115,18 +115,30 @@ figma.ui.onmessage = (msg) => {
     figmaNotify("error", msg.data, 3000);
   }
 
-  if (msg.type === "copy") {
-    console.log("copy", msg.text);
-    figmaNotify("copy", msg.text, 3000);
+  if (msg.type === "bind-names") {
+    if (isSelectionLength) {
+      figma.currentPage.selection.map((selectedItem) => {
+        selectedItem.name = msg.layerName;
+      });
+
+      figmaNotify("success", `Name ${msg.layerName} is bound`, 3000);
+    } else {
+      figmaNotify("error", "Select some layers first", 3000);
+    }
   }
 
   // CHANGE SIZE
-  const maximumPluginHeight = figma.viewport.bounds.height - 100;
+  const zoomRatio = figma.viewport.zoom;
+  const maximumPluginHeight =
+    Math.round(figma.viewport.bounds.height * zoomRatio) - 140;
+  // console.log("maximumPluginHeight and zoom", maximumPluginHeight, zoomRatio);
 
   if (msg.type === "initial-size") {
     figma.ui.resize(pluginFrameSize.width, pluginFrameSize.height);
   }
+
   if (msg.type === "change-size") {
+    // console.log("max height", maximumPluginHeight);
     if (msg.frameHeight > maximumPluginHeight) {
       figma.ui.resize(pluginFrameSize.width, maximumPluginHeight);
     } else {

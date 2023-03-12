@@ -48,6 +48,7 @@ const Checkbox: React.FC<Props> = (props) => {
           <Icon
             name={props.indeterminate ? "partial-checkbox" : "tick-checkbox"}
             className={styles.icon}
+            color="var(--clr-main)"
           />
         ) : null}
         <input
@@ -68,7 +69,7 @@ const Checkbox: React.FC<Props> = (props) => {
         {props.label}
       </label>
 
-      {props.isImage && <Icon name="image" />}
+      {props.isImage && <Icon name="image" color="var(--clr-main)" />}
     </div>
   );
 };

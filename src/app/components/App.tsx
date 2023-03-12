@@ -13,6 +13,7 @@ import {
 } from "../utils/app";
 import { pluginFrameSize } from "../../data/pluginFrameSize";
 import { LaunchView, OperationsView, SettingsView } from "./views";
+import { useEffectAfterMount } from "../hooks";
 
 console.clear();
 
@@ -103,7 +104,6 @@ const App = () => {
 
   const onRejectClick = () => {
     parent.postMessage({ pluginMessage: { type: "initial-size" } }, "*");
-
     setJSONConfig(null);
   };
 
@@ -142,7 +142,7 @@ const App = () => {
 
       // if app settings detected
       if (message.type === "get-app-settings-storage") {
-        console.log("get app settings", message.data);
+        // console.log("get app settings", message.data);
         if (message.data) {
           setAppConfig(message.data);
         }
@@ -152,7 +152,7 @@ const App = () => {
     };
   }, [appConfig.svgScale]);
 
-  React.useEffect(() => {
+  useEffectAfterMount(() => {
     if (showAppSettings) {
       parent.postMessage(
         { pluginMessage: { type: "change-size", frameHeight: 390 } },
@@ -170,6 +170,15 @@ const App = () => {
       );
     }
   }, [showAppSettings]);
+
+  React.useEffect(() => {
+    // apply dark mode
+    if (appConfig.darkMode) {
+      document.body.classList.add("dark-theme");
+    } else {
+      document.body.classList.remove("dark-theme");
+    }
+  }, [appConfig.darkMode]);
 
   //////////////////////////
   // RENDER ////////////////

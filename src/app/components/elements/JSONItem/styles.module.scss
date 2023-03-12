@@ -51,6 +51,50 @@
   border-radius: var(--radius-m);
 }
 
+.itemIndicator {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 28px;
+  width: 12px;
+}
+
+.expandButton {
+  @extend .itemIndicator;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+.expandIcon {
+  width: 8px;
+  height: 8px;
+  transition: transform 0.15s ease;
+
+  path {
+    fill: var(--clr-main);
+  }
+}
+
+.itemPointer {
+  @extend .itemIndicator;
+
+  &:after {
+    content: "";
+    display: block;
+    left: 0;
+    top: 0;
+    width: 3px;
+    height: 3px;
+    border-radius: 100px;
+    background-color: var(--clr-main);
+  }
+}
+
 .copied {
   animation: copied 0.5s ease-in;
 }

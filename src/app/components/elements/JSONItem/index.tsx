@@ -97,10 +97,10 @@ const JSONItem: React.FC<Props> = (props) => {
       {props.type === "item" && isChecked ? (
         <div
           className={styles.labelTag}
-          title="Bind names with layer"
+          title="Bind name with layer"
           onClick={handleBindNames}
         >
-          <Icon name="copy" color="var(--clr-main)" />
+          <Icon name="bind" color="var(--clr-main)" />
         </div>
       ) : null}
     </section>

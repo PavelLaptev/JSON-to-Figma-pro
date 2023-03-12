@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Button, ServiceButtons } from "../../elements";
+import logo from "../../../assets/logo.svg";
 
 import styles from "./styles.module.scss";
 
@@ -13,7 +14,9 @@ interface Props {
 const LaunchView: React.FC<Props> = (props) => {
   return (
     <main className={styles.wrap}>
-      <section className={styles.head}></section>
+      <section className={styles.head}>
+        <img className={styles.logo} src={logo} alt="Logo" />
+      </section>
 
       <section className={styles.buttonsSection}>
         <Button

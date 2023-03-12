@@ -50,6 +50,7 @@ const applyOptions = (
 
 // ON MESSAGE
 figma.ui.onmessage = (msg) => {
+  // console.log("payments", figma.payments.status);
   const isSelectionLength = figma.currentPage.selection.length !== 0;
 
   if (msg.type === "populate") {
@@ -87,23 +88,6 @@ figma.ui.onmessage = (msg) => {
       imageHash: imageHash,
     };
     target["fills"] = [newFill];
-  }
-
-  // "SKIP LAYERS" FUNCTIONS
-  if (msg.type === "add-skip-sign") {
-    if (isSelectionLength) {
-      addSign(figma.currentPage.selection, skipSign);
-    } else {
-      figmaNotify("error", "Select some layers first", 3000);
-    }
-  }
-
-  if (msg.type === "remove-skip-sign") {
-    if (isSelectionLength) {
-      removeSign(figma.currentPage.selection, skipSign);
-    } else {
-      figmaNotify("error", "Select some layers first", 3000);
-    }
   }
 
   ///////////////////////

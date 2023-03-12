@@ -12,7 +12,7 @@ import {
   fetchImagefromURL,
 } from "../utils/app";
 import { pluginFrameSize } from "../../data/pluginFrameSize";
-import { LaunchView, OperationsView, SettingsView } from "./views";
+import { LaunchView, OperationsView, SettingsView, LoadingView } from "./views";
 import { useEffectAfterMount } from "../hooks";
 
 console.clear();
@@ -208,7 +208,7 @@ const App = () => {
     }
 
     if (storageStatus === "loading" && !JSONconfig) {
-      return <h1>Storage is loading...</h1>;
+      return <LoadingView />;
     }
 
     if (storageStatus === "empty" && !JSONconfig) {

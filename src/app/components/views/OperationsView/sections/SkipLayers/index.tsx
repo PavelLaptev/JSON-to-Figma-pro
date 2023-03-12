@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { ElementCaption, Button, SectionWrapper } from "../../../../elements";
-import { skipSign } from "../../../../../../data/skipSign";
+import { ElementCaption, SectionWrapper } from "../../../../elements";
 
 import styles from "./styles.module.scss";
 
@@ -10,28 +9,15 @@ interface Props {
 }
 
 const SkipLayers: React.FC<Props> = (props) => {
-  const addSkipSign = () => {
-    parent.postMessage({ pluginMessage: { type: "add-skip-sign" } }, "*");
-  };
-
-  const removeSign = () => {
-    parent.postMessage({ pluginMessage: { type: "remove-skip-sign" } }, "*");
-  };
-
   return (
     <SectionWrapper
       className={styles.wrap}
       onChange={props.onSectionChange}
-      title="Skip by special sign"
+      title="Skip layers"
     >
       <ElementCaption
-        text={`Select layers you want to exclude for the population. The plugin will skip all layers with the special ${skipSign} sign.`}
-      >
-        <div className={styles.btnWrap}>
-          <Button text="Add sign" mod="OUTLINE" onClick={addSkipSign} />
-          <Button text="Remove sign" mod="OUTLINE" onClick={removeSign} />
-        </div>
-      </ElementCaption>
+        text={`Lock 🔒 a layer to skip it in population process.`}
+      />
     </SectionWrapper>
   );
 };

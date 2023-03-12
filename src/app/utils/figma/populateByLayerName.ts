@@ -1,5 +1,3 @@
-import { skipSign } from "../../../data/skipSign";
-
 export default function populateByLayerName(
   selectedLayers,
   JSONobj,
@@ -9,7 +7,7 @@ export default function populateByLayerName(
 
   const loopSelected = (arr) => {
     arr.map((item) => {
-      if (!item.name.includes(skipSign)) {
+      if (!item.locked) {
         if (
           item.name.toUpperCase() === selectedItem.toUpperCase() &&
           item.type === "TEXT"

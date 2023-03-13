@@ -3,18 +3,13 @@ import {
   shuffleArray,
   shuffleChaotic,
   populateByLayerName,
-  addSign,
-  removeSign,
-} from "../app/utils/figma";
-import { pluginFrameSize } from "../data/pluginFrameSize";
-import { skipSign } from "../data/skipSign";
+} from "../utils/figma";
+import { pluginFrameSize } from "../dataConfig";
+import { handleStorage } from "./handleStorage";
+import { handleResize } from "./handleResize";
+import { handlePayment } from "./handlePayment";
 
-const pluginName = "JSONtoFigmaPlugin";
-const JSONStorageSection = `${pluginName}-json-settings`;
-const appStorageSection = `${pluginName}-app-settings`;
-
-// CLEAN STORAGE
-// figma.clientStorage.setAsync(pluginName, null);
+console.clear();
 
 // SHOW UI
 figma.showUI(__html__, {
@@ -44,12 +39,20 @@ const applyOptions = (
   };
 
   const sliced = randomiseObj().slice(range.from - 1, range.to);
-
   return sliced;
 };
 
+// figma.payments.initiateCheckoutAsync({
+//   interstitial: "TRIAL_ENDED",
+// });
+
+const trialPeriod = handlePayment();
+
 // ON MESSAGE
 figma.ui.onmessage = (msg) => {
+  handleStorage(msg);
+  handleResize(msg);
+
   // console.log("payments", figma.payments.status);
   const isSelectionLength = figma.currentPage.selection.length !== 0;
 
@@ -111,58 +114,15 @@ figma.ui.onmessage = (msg) => {
     }
   }
 
-  // CHANGE SIZE
-  const zoomRatio = figma.viewport.zoom;
-  const maximumPluginHeight =
-    Math.round(figma.viewport.bounds.height * zoomRatio) - 140;
-  // console.log("maximumPluginHeight and zoom", maximumPluginHeight, zoomRatio);
-
-  if (msg.type === "initial-size") {
-    figma.ui.resize(pluginFrameSize.width, pluginFrameSize.height);
-  }
-
-  if (msg.type === "change-size") {
-    // console.log("max height", maximumPluginHeight);
-    if (msg.frameHeight > maximumPluginHeight) {
-      figma.ui.resize(pluginFrameSize.width, maximumPluginHeight);
-    } else {
-      figma.ui.resize(pluginFrameSize.width, Math.round(msg.frameHeight));
-    }
-  }
-
-  // STORAGE WORKAROUND
-  // JSON SETTINGS
-  if (msg.type === "set-json-settings-storage") {
-    figma.clientStorage.setAsync(JSONStorageSection, JSON.stringify(msg.data));
-  }
-
-  if (msg.type === "get-json-settings-storage") {
-    figma.clientStorage.getAsync(JSONStorageSection).then((data) => {
-      figma.ui.postMessage({
-        type: "get-json-settings-storage",
-        data: JSON.parse(data) as JSONconfigType,
-      });
+  ///////////////////////
+  // HANDLE TRIAL END //
+  ///////////////////////
+  trialPeriod.then((trialPeriod) => {
+    figma.ui.postMessage({
+      type: "trial",
+      daysLeft: trialPeriod,
     });
-  }
-
-  if (msg.type === "clear-json-settings-storage") {
-    figma.clientStorage.setAsync(JSONStorageSection, null);
-  }
-
-  // APP SETTINGS
-  if (msg.type === "set-app-settings-storage") {
-    // console.log("set-app-settings-storage", msg);
-    figma.clientStorage.setAsync(appStorageSection, JSON.stringify(msg.data));
-  }
-
-  if (msg.type === "get-app-settings-storage") {
-    figma.clientStorage.getAsync(appStorageSection).then((data) => {
-      figma.ui.postMessage({
-        type: "get-app-settings-storage",
-        data: JSON.parse(data) as appConfigType,
-      });
-    });
-  }
+  });
 };
 
 figma.currentPage.setRelaunchData({ open: "" });

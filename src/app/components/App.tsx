@@ -10,12 +10,10 @@ import {
   convertObjectArraysToObjects,
   convertObjectToStates,
   fetchImagefromURL,
-} from "../utils/app";
-import { pluginFrameSize } from "../../data/pluginFrameSize";
+} from "../../utils/app";
+import { pluginFrameSize } from "../../dataConfig";
 import { LaunchView, OperationsView, SettingsView, LoadingView } from "./views";
 import { useEffectAfterMount } from "../hooks";
-
-console.clear();
 
 const App = () => {
   const [showAppSettings, setShowAppSettings] = React.useState(false);

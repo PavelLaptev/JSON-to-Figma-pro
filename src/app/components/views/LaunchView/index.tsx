@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, ServiceButtons } from "../../elements";
+import { Button, ServiceButtons, TrialBanner } from "../../elements";
 import logo from "../../../assets/logo.svg";
 
 import styles from "./styles.module.scss";
@@ -33,6 +33,7 @@ const LaunchView: React.FC<Props> = (props) => {
       </section>
 
       <ServiceButtons onSettingsClick={props.onSettingsClick} />
+      <TrialBanner />
     </main>
   );
 };

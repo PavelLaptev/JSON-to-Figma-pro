@@ -1,4 +1,4 @@
-import { msgTypes } from "../../../data/msgTypes";
+import { msgTypes } from "../../dataConfig";
 
 export default function figmaNotify(
   type: string = null,

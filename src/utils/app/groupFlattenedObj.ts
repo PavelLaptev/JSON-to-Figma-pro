@@ -1,5 +1,5 @@
 import flattenObj from "./flattenObj";
-import { isPlainObject } from "./";
+import { isPlainObject } from ".";
 
 export default function groupFlattenedObj(obj) {
   if (Array.isArray(obj)) {

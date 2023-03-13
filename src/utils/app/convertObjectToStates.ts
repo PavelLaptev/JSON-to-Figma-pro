@@ -1,5 +1,5 @@
 // replace all object values with a new value
-import { isImageString } from "./";
+import { isImageString } from ".";
 export default function convertObjectToStates(obj: any, parentName: any) {
   const objCopy = { ...obj };
 

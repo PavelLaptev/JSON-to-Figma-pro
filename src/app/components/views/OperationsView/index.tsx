@@ -11,7 +11,7 @@ import {
   findObjItem,
   updateGroupState,
   getAllChecked,
-} from "../../../utils/app";
+} from "../../../../utils/app";
 import { useFrameSize } from "../../../hooks";
 
 import styles from "./styles.module.scss";

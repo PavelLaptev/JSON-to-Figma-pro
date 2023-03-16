@@ -17,7 +17,7 @@ export default async function fetchImagefromURL(
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      console.log("svgScale", svgScale);
+      // console.log("svgScale", svgScale);
 
       const img = new Image();
       img.src = blobImg;

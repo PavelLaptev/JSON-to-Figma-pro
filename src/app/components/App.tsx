@@ -2,7 +2,7 @@ import * as React from "react";
 import "../styles/ui.scss";
 
 import {
-  showMsg,
+  showFigmaMsg,
   execGetClipboard,
   clearNullValues,
   fetchFromURL,
@@ -11,9 +11,8 @@ import {
   convertObjectToStates,
   fetchImagefromURL,
 } from "../../utils/app";
-import { pluginFrameSize } from "../../dataConfig";
 import { LaunchView, OperationsView, SettingsView, LoadingView } from "./views";
-import { useEffectAfterMount } from "../hooks";
+import { useEffectAfterMount, useGetTrialPeriod } from "../hooks";
 
 const App = () => {
   const [showAppSettings, setShowAppSettings] = React.useState(false);
@@ -29,11 +28,7 @@ const App = () => {
 
   const [storageStatus, setStorageStatus] = React.useState("loading") as any;
 
-  // Helper function
-  const showErrorMsg = (error, errorText) => {
-    console.error(error);
-    showMsg("error", errorText);
-  };
+  const daysLeft = useGetTrialPeriod();
 
   const handleJSON = (obj: object) => {
     const clearedFromNull = clearNullValues(obj);
@@ -77,10 +72,8 @@ const App = () => {
         let obj = JSON.parse(fileReader.result as string);
         handleJSON(obj);
       } catch (error) {
-        showErrorMsg(
-          error,
-          "Something wrong with the file. Check the structure"
-        );
+        console.error(error);
+        showFigmaMsg("🚨 Something wrong with the file. Check the structure");
       }
     };
     e.target.value = "";
@@ -90,19 +83,44 @@ const App = () => {
   const fetchUrlLink = async () => {
     let clipboardLink = execGetClipboard();
 
-    try {
-      let response = await fetchFromURL(clipboardLink);
-      let responseJson = await response.json();
+    let response = await fetchFromURL(clipboardLink);
 
-      handleJSON(responseJson);
-    } catch (error) {
-      showErrorMsg(error, "Something wrong with the URL. Check the structure");
-    }
+    handleJSON(response);
   };
 
   const onRejectClick = () => {
-    parent.postMessage({ pluginMessage: { type: "initial-size" } }, "*");
+    parent.postMessage(
+      { pluginMessage: { type: "initial-size", isTrial: daysLeft > 0 } },
+      "*"
+    );
     setJSONConfig(null);
+  };
+
+  const handleOnMessage = (event) => {
+    // console.log("onmessage", event.data.pluginMessage);
+    const message = event.data.pluginMessage;
+
+    // get storage
+    if (message.type === "get-json-settings-storage") {
+      if (message.data) {
+        setJSONConfig(message.data);
+      }
+    }
+
+    // if app settings detected
+    if (message.type === "get-app-settings-storage") {
+      // console.log("get app settings", message.data);
+      if (message.data) {
+        setAppConfig(message.data);
+      }
+    }
+
+    // if image detected
+    if (message.type === "image-url") {
+      fetchImagefromURL(message.url, message.targetID, appConfig.svgScale);
+    }
+
+    setStorageStatus("empty");
   };
 
   //////////////////////////
@@ -119,34 +137,19 @@ const App = () => {
       { pluginMessage: { type: "get-app-settings-storage" } },
       "*"
     );
+  }, []);
 
-    window.onmessage = (event) => {
-      const message = event.data.pluginMessage;
+  React.useEffect(() => {
+    // add onmessage listener
+    window.addEventListener("message", (event) => {
+      handleOnMessage(event);
+    });
 
-      // console.log("get it", message);
-      // console.log("get json settings", message);
-      // get storage
-      if (message.type === "get-json-settings-storage") {
-        if (message.data) {
-          setJSONConfig(message.data);
-        }
-      }
-
-      // if image detected
-      if (message.type === "image-url") {
-        // console.log(imgURL);
-        fetchImagefromURL(message.url, message.targetID, appConfig.svgScale);
-      }
-
-      // if app settings detected
-      if (message.type === "get-app-settings-storage") {
-        // console.log("get app settings", message.data);
-        if (message.data) {
-          setAppConfig(message.data);
-        }
-      }
-
-      setStorageStatus("empty");
+    // remove onmessage listener
+    return () => {
+      window.removeEventListener("message", (event) => {
+        handleOnMessage(event);
+      });
     };
   }, [appConfig.svgScale]);
 
@@ -160,8 +163,8 @@ const App = () => {
       parent.postMessage(
         {
           pluginMessage: {
-            type: "change-size",
-            frameHeight: pluginFrameSize.height,
+            type: "initial-size",
+            isTrial: daysLeft > 0,
           },
         },
         "*"
@@ -169,7 +172,7 @@ const App = () => {
     }
   }, [showAppSettings]);
 
-  React.useEffect(() => {
+  useEffectAfterMount(() => {
     // apply dark mode
     if (appConfig.darkMode) {
       document.body.classList.add("dark-theme");
@@ -215,6 +218,7 @@ const App = () => {
           urlOnClick={fetchUrlLink}
           fileOnChange={handleUploadLocalFile}
           onSettingsClick={() => setShowAppSettings(true)}
+          daysLeft={daysLeft}
         />
       );
     }

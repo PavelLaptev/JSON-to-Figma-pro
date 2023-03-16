@@ -1,4 +1,4 @@
-export { default as showMsg } from "./showMsg";
+export { default as showFigmaMsg } from "./showFigmaMsg";
 export { default as execGetClipboard } from "./execGetClipboard";
 export { default as groupFlattenedObj } from "./groupFlattenedObj";
 export { default as isPlainObject } from "./isPlainObject";

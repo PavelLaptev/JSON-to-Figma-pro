@@ -9,6 +9,7 @@ interface Props {
   fileOnChange(event: React.FormEvent<HTMLInputElement>): void;
   urlOnClick(event: React.MouseEvent<HTMLButtonElement>): void;
   onSettingsClick: () => void;
+  daysLeft: number;
 }
 
 const LaunchView: React.FC<Props> = (props) => {
@@ -33,7 +34,8 @@ const LaunchView: React.FC<Props> = (props) => {
       </section>
 
       <ServiceButtons onSettingsClick={props.onSettingsClick} />
-      <TrialBanner />
+
+      {props.daysLeft > 0 && <TrialBanner daysLeft={props.daysLeft} />}
     </main>
   );
 };

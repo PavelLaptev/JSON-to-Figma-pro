@@ -11,6 +11,7 @@ import {
   findObjItem,
   updateGroupState,
   getAllChecked,
+  showFigmaMsg,
 } from "../../../../utils/app";
 import { useFrameSize } from "../../../hooks";
 
@@ -25,7 +26,7 @@ interface Props {
 const OperationsView: React.FunctionComponent<Props> = (props) => {
   const mainSectionRef = React.useRef<HTMLDivElement>(null);
 
-  console.log(props.appConfig);
+  // console.log(props.appConfig);
 
   const [JSONconfig, setJSONconfig] = React.useState(props.JSONconfig);
 
@@ -123,8 +124,6 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
       ...JSONconfig,
       randomType: value,
     });
-
-    // console.log(props.JSONconfig.originalJSON);
   };
 
   const handleRangeChange = (range: { from: number; to: number }) => {
@@ -139,15 +138,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
   const handlePopulateClick = () => {
     // check if there is any selected item
     if (JSONconfig.checkedItems.length === 0) {
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: "alert",
-            data: "Please select at least one item",
-          },
-        },
-        "*"
-      );
+      showFigmaMsg("🚨 Please select at least one item");
       return;
     }
 

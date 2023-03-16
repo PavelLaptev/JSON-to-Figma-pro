@@ -23,7 +23,7 @@ const ServiceButtons: React.FC<Props> = (props) => {
       </button>
       <button
         onClick={() => {
-          console.log("Settings");
+          // console.log("Settings");
 
           if (props.onSettingsClick) {
             props.onSettingsClick();

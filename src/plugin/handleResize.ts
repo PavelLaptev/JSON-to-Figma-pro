@@ -8,7 +8,10 @@ export const handleResize = (msg: any) => {
   // console.log("maximumPluginHeight and zoom", maximumPluginHeight, zoomRatio);
 
   if (msg.type === "initial-size") {
-    figma.ui.resize(pluginFrameSize.width, pluginFrameSize.height);
+    figma.ui.resize(
+      pluginFrameSize.width,
+      msg.isTrial ? pluginFrameSize.height + 100 : pluginFrameSize.height
+    );
   }
 
   if (msg.type === "change-size") {

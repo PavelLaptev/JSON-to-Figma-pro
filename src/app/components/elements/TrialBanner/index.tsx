@@ -1,32 +1,38 @@
 import * as React from "react";
-// import Icon from "../Icon";
+import lockTop from "./../../../assets/lock-top.svg";
 import styles from "./styles.module.scss";
 
 interface Props {
   className?: any;
+  daysLeft: number;
 }
 
 const TrialBanner: React.FC<Props> = (props) => {
-  const [daysLeft, setDaysLeft] = React.useState(0);
-
-  React.useEffect(() => {
-    // listen for messages from the plugin controller
-    window.onmessage = (event) => {
-      const message = event.data.pluginMessage;
-
-      if (message.type === "trial" && message.daysLeft > 0) {
-        // console.log("trial", message.daysLeft);
-        setDaysLeft(message.daysLeft);
-      }
-    };
-  }, []);
+  const handleClick = () => {
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "initiate-checkout",
+        },
+      },
+      "*"
+    );
+  };
 
   return (
-    daysLeft > 0 && (
-      <div className={`${styles.wrap} ${props.className}`}>
-        <h3>{`Trial version. ${daysLeft} days left.`}</h3>
+    <div className={`${styles.wrap} ${props.className}`} onClick={handleClick}>
+      <div className={styles.content}>
+        <h3 className={styles.title}>
+          Your trial will expire in <span>{props.daysLeft} days</span>
+        </h3>
+        <span className={styles.text}>Unlock your full potential now!</span>
       </div>
-    )
+
+      <div className={styles.lock}>
+        <img className={styles.lockTop} src={lockTop} alt="" />
+        <div className={styles.lockBottom} />
+      </div>
+    </div>
   );
 };
 

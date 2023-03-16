@@ -5,6 +5,8 @@ const appStorageSection = `${pluginName}-app-settings`;
 export const handleStorage = (msg: any) => {
   // CLEAN STORAGE
   // figma.clientStorage.setAsync(pluginName, null);
+  // figma.clientStorage.setAsync(JSONStorageSection, null);
+  // figma.clientStorage.setAsync(appStorageSection, null);
 
   // JSON SETTINGS
   if (msg.type === "set-json-settings-storage") {
@@ -32,6 +34,7 @@ export const handleStorage = (msg: any) => {
 
   if (msg.type === "get-app-settings-storage") {
     figma.clientStorage.getAsync(appStorageSection).then((data) => {
+      // console.log("PLUGIN >>> get-app-settings-storage", data);
       figma.ui.postMessage({
         type: "get-app-settings-storage",
         data: JSON.parse(data) as appConfigType,

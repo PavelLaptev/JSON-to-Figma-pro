@@ -42,12 +42,6 @@ const applyOptions = (
   return sliced;
 };
 
-// figma.payments.initiateCheckoutAsync({
-//   interstitial: "TRIAL_ENDED",
-// });
-
-const trialPeriod = handlePayment();
-
 // ON MESSAGE
 figma.ui.onmessage = (msg) => {
   handleStorage(msg);
@@ -64,7 +58,7 @@ figma.ui.onmessage = (msg) => {
     // Check if something selected
     // POPULATE
     if (!isSelectionLength) {
-      figmaNotify("error", `Select something to populate matches`, 3000);
+      figmaNotify(`🚨 Select something to populate matches`, 3000);
     } else {
       const modifiedData = applyOptions(
         JSONconfig.originalJSON,
@@ -97,32 +91,45 @@ figma.ui.onmessage = (msg) => {
   // SERVICE FUNCTIONS //
   ///////////////////////
 
-  // IF NO KEY SELECTED
-  if (msg.type === "alert") {
-    figmaNotify("error", msg.data, 3000);
-  }
-
   if (msg.type === "bind-names") {
     if (isSelectionLength) {
       figma.currentPage.selection.map((selectedItem) => {
         selectedItem.name = msg.layerName;
       });
 
-      figmaNotify("success", `Name ${msg.layerName} is bound`, 3000);
+      figmaNotify(`✅ Name ${msg.layerName} is bound`, 3000);
     } else {
-      figmaNotify("error", "Select some layers first", 3000);
+      figmaNotify("🚨 Select some layers first", 3000);
     }
   }
 
   ///////////////////////
-  // HANDLE TRIAL END //
+  // HANDLE PAYMENT /////
   ///////////////////////
-  trialPeriod.then((trialPeriod) => {
-    figma.ui.postMessage({
-      type: "trial",
-      daysLeft: trialPeriod,
+
+  if (msg.type === "initiate-checkout") {
+    console.log("initiate-checkout");
+    figma.payments.initiateCheckoutAsync({
+      interstitial: "SKIP",
     });
-  });
+  }
+
+  if (msg.type === "get-trial") {
+    handlePayment(msg).then((daysLeft) => {
+      // console.log("daysLeft", daysLeft);
+      figma.ui.postMessage({
+        type: "trial",
+        daysLeft: daysLeft,
+      });
+    });
+  }
+
+  ///////////////////////
+  // MESSAGE FROM UI ////
+  ///////////////////////
+  if (msg.type === "showMsg") {
+    figmaNotify(msg.text, 3000);
+  }
 };
 
 figma.currentPage.setRelaunchData({ open: "" });

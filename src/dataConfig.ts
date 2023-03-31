@@ -3,4 +3,4 @@ export const pluginFrameSize = {
   height: 290,
 };
 
-export const trialPeriod = 4;
+export const trialPeriod = 7;

@@ -117,7 +117,12 @@ const App = () => {
 
     // if image detected
     if (message.type === "image-url") {
-      fetchImagefromURL(message.url, message.targetID, appConfig.svgScale);
+      fetchImagefromURL(
+        message.url,
+        message.targetID,
+        appConfig.svgScale,
+        message.index
+      );
     }
 
     setStorageStatus("empty");

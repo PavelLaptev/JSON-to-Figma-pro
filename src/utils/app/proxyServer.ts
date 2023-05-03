@@ -1,1 +1,1 @@
-export const proxyServer = "https://api.allorigins.win/get?url=";
+export const proxyServer = "https://corsproxy.io/?";

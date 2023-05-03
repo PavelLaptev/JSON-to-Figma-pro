@@ -1,3 +1,5 @@
+import figmaNotify from "./figmaNotify";
+
 export default function populateByLayerName(
   selectedLayers,
   JSONobj,
@@ -26,18 +28,15 @@ export default function populateByLayerName(
           item.type !== "TEXT"
         ) {
           if (JSONobj.hasOwnProperty(newItem)) {
-            // if last item is reached
-            // if (newItem === JSONobj.length) {
-            //   figma.notify("fetching images is done");
-            // }
-            // if (newItem === 0) {
-            //   figma.notify("fetching images…");
-            // }
+            if (newItem === 0) {
+              figmaNotify("Fetching images...", 1000);
+            }
 
             figma.ui.postMessage({
               type: "image-url",
               url: JSONobj[newItem][selectedItem].toString(),
               targetID: item.id,
+              index: newItem,
             });
             newItem = ++newItem;
           }

@@ -7,20 +7,23 @@ export default async function fetchImagefromURL(
 ) {
   fetch(`${proxyServer}${url}`)
     .then((res) => {
-      return res.blob();
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Network response was not ok.");
+      }
     })
-    .then((blob) => {
-      const blobImg = URL.createObjectURL(blob);
-      const isFileSVG = blob.type.includes("svg");
+    .then((data) => {
+      const base64Data = data.contents;
+      console.log("data", data);
+      const isFileSVG = url.includes(".svg");
 
       // convert blobl to png
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      // console.log("svgScale", svgScale);
-
       const img = new Image();
-      img.src = blobImg;
+      img.src = base64Data;
       img.onload = () => {
         // set canvas size
         if (isFileSVG) {
@@ -35,7 +38,6 @@ export default async function fetchImagefromURL(
         }
 
         // draw image
-        // ctx.drawImage(img, 0, 0);
         canvas.toBlob((blob) => {
           // blob to arrayBuffer
           const reader = new FileReader();

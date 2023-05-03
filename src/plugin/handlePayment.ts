@@ -7,9 +7,9 @@ export const handlePayment = async (msg) => {
 
   // console.log("secondsSinceFirstRun", trialPeriod - daysSinceFirstRun);
 
-  // figma.payments.setPaymentStatusInDevelopment({
-  //   type: "UNPAID",
-  // });
+  figma.payments.setPaymentStatusInDevelopment({
+    type: "PAID",
+  });
 
   if (msg.type === "get-trial" && figma.payments.status.type === "UNPAID") {
     // console.log("daysSinceFirstRun", daysSinceFirstRun, trialPeriod);

@@ -26,6 +26,14 @@ export default function populateByLayerName(
           item.type !== "TEXT"
         ) {
           if (JSONobj.hasOwnProperty(newItem)) {
+            // if last item is reached
+            // if (newItem === JSONobj.length) {
+            //   figma.notify("fetching images is done");
+            // }
+            // if (newItem === 0) {
+            //   figma.notify("fetching images…");
+            // }
+
             figma.ui.postMessage({
               type: "image-url",
               url: JSONobj[newItem][selectedItem].toString(),

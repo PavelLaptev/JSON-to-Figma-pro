@@ -1,3 +1,5 @@
+import figmaNotify from "./figmaNotify";
+
 export default function populateByLayerName(
   selectedLayers,
   JSONobj,
@@ -26,10 +28,15 @@ export default function populateByLayerName(
           item.type !== "TEXT"
         ) {
           if (JSONobj.hasOwnProperty(newItem)) {
+            if (newItem === 0) {
+              figmaNotify("Fetching images...", 1000);
+            }
+
             figma.ui.postMessage({
               type: "image-url",
               url: JSONobj[newItem][selectedItem].toString(),
               targetID: item.id,
+              index: newItem,
             });
             newItem = ++newItem;
           }

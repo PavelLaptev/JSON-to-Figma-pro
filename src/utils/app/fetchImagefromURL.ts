@@ -3,9 +3,11 @@ import { proxyServer } from "./proxyServer";
 export default async function fetchImagefromURL(
   url,
   targetID,
-  svgScale: number
+  svgScale: number,
+  index: number
 ) {
-  fetch(`${proxyServer}${url}`)
+  // console.log("fetchImagefromURL", url, targetID, svgScale, index);
+  fetch(`${proxyServer}${encodeURIComponent(url)}`)
     .then((res) => {
       return res.blob();
     })
@@ -16,8 +18,6 @@ export default async function fetchImagefromURL(
       // convert blobl to png
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-
-      // console.log("svgScale", svgScale);
 
       const img = new Image();
       img.src = blobImg;
@@ -50,6 +50,7 @@ export default async function fetchImagefromURL(
                   type: "imgData",
                   data: uint8Array,
                   targetID: targetID,
+                  index: index,
                 },
               },
               "*"

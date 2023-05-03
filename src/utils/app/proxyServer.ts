@@ -1,1 +1,1 @@
-export const proxyServer = "https://fuckcors.app/";
+export const proxyServer = "https://corsproxy.io/?";

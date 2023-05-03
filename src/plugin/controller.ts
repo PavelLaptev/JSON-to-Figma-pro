@@ -25,7 +25,7 @@ const applyOptions = (
     to: number;
   }
 ) => {
-  console.log("applyOptions", obj, randomType, range);
+  // console.log("applyOptions", obj, randomType, range);
 
   const randomiseObj = () => {
     switch (randomType) {
@@ -74,6 +74,7 @@ figma.ui.onmessage = (msg) => {
 
   // if we recived fetched images
   if (msg.type === "imgData") {
+    const selectionLength = figma.currentPage.selection.length;
     const target = figma.currentPage.findOne((n) => n.id === msg.targetID);
     const imageHash = figma.createImage(msg.data).hash;
 
@@ -85,6 +86,11 @@ figma.ui.onmessage = (msg) => {
       imageHash: imageHash,
     };
     target["fills"] = [newFill];
+
+    // show notification if all images are fetched
+    if (msg.index === selectionLength - 1) {
+      figmaNotify("🎉 Images fetched!", 3000);
+    }
   }
 
   ///////////////////////

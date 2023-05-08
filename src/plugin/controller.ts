@@ -78,11 +78,18 @@ figma.ui.onmessage = (msg) => {
     const target = figma.currentPage.findOne((n) => n.id === msg.targetID);
     const imageHash = figma.createImage(msg.data).hash;
 
+    console.log(target["fills"]);
+
+    const firstFill = target["fills"][0];
+
     const newFill = {
       type: "IMAGE",
-      opacity: 1,
-      blendMode: "NORMAL",
-      scaleMode: "FILL",
+      blendMode: firstFill.blendMode ? firstFill.blendMode : "NORMAL",
+      filters: firstFill.filters ? firstFill.filters : {},
+      scaleMode: firstFill.scaleMode ? firstFill.scaleMode : "FILL",
+      scalingFactor: firstFill.scalingFactor ? firstFill.scalingFactor : 1,
+      rotation: firstFill.rotation ? firstFill.rotation : 0,
+      opacity: firstFill.opacity ? firstFill.opacity : 1,
       imageHash: imageHash,
     };
     target["fills"] = [newFill];

@@ -43,7 +43,17 @@
     "id": 5,
     "name": "Janeva Cornelisse",
     "job": "Paralegal",
-    "image": "https://robohash.org/eiusporroest.jpg?size=500x500&set=set1",
+    "image": "https://cdn.glitch.global/4d3798fc-94a3-47b9-9e12-4b94674bfbff/happy-family-1.jpeg?v=1685792591289",
+    "company": {
+      "name": "Big Co",
+      "catchPhrase": "We do big things"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Janeva Cornelisse",
+    "job": "Paralegal",
+    "image": "https://ik.imagekit.io/fliptopbox/lifedrawing/model/francoise-odill/françoise-odill.jpg?tr=w-350,h-350,f-auto",
     "company": {
       "name": "Big Co",
       "catchPhrase": "We do big things"

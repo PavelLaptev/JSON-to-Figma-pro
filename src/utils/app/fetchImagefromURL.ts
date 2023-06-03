@@ -7,7 +7,9 @@ export default async function fetchImagefromURL(
   index: number
 ) {
   // console.log("fetchImagefromURL", url, targetID, svgScale, index);
-  fetch(`${proxyServer}${encodeURIComponent(url)}`)
+  const encodedURL = encodeURI(url);
+
+  fetch(`${proxyServer}${encodeURIComponent(encodedURL)}`)
     .then((res) => {
       return res.blob();
     })

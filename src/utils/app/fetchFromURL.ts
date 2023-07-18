@@ -6,7 +6,7 @@ export default async function fetchFromURL(url, proxyServer) {
 
   if (!response.ok) {
     console.error("Error fetching from URL", response);
-    showMsg("🚨 Error fetching from URL");
+    showMsg("🚨 Error fetching from URL. Check the console for details.");
   }
 
   return response.json();

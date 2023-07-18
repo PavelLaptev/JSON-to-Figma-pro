@@ -1,4 +1,5 @@
 // import proxyServer from "./proxyServer";
+import showMsg from "./showFigmaMsg";
 
 export default async function fetchImagefromURL(
   url,
@@ -64,14 +65,6 @@ export default async function fetchImagefromURL(
     .catch((err) => {
       console.error("Error fetching from URL", err);
 
-      parent.postMessage(
-        {
-          pluginMessage: {
-            type: "showMsg",
-            text: "🚨 Error fetching from URL. Check the console for details.",
-          },
-        },
-        "*"
-      );
+      showMsg("🚨 Error fetching from URL. Check the console for details.");
     });
 }

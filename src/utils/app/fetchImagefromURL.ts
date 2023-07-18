@@ -60,5 +60,18 @@ export default async function fetchImagefromURL(
           };
         }, "image/png");
       };
+    })
+    .catch((err) => {
+      console.error("Error fetching from URL", err);
+
+      parent.postMessage(
+        {
+          pluginMessage: {
+            type: "showMsg",
+            text: "🚨 Error fetching from URL. Check the console for details.",
+          },
+        },
+        "*"
+      );
     });
 }

@@ -22,7 +22,7 @@ const SettingsView: React.FC<Props> = (props) => {
     props.settings as appConfigType
   );
 
-  const handleSVGScaleChange = (e) => {
+  const handleSVGScaleChange = (e: React.FormEvent<HTMLInputElement>) => {
     // allow only numbers and not bigger than 10 and not less than 1
     const { value } = e.currentTarget;
     const parsedValue = parseInt(value, 10);
@@ -38,6 +38,10 @@ const SettingsView: React.FC<Props> = (props) => {
 
   const handleDarkModeChange = (checked: boolean) => {
     setSettings({ ...settings, darkMode: checked });
+  };
+
+  const handleProxyChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSettings({ ...settings, proxy: e.currentTarget.value });
   };
 
   useEffectAfterMount(() => {
@@ -78,6 +82,27 @@ const SettingsView: React.FC<Props> = (props) => {
             max={10}
           />
           <ElementCaption text="By default plugin fetch all images @2x size. Regulate this value but not less than 1 and not bigger than 10." />
+        </SectionWrapper>
+
+        <SectionWrapper divider title="Proxy server">
+          <Input
+            value={settings.proxy}
+            onChange={handleProxyChange}
+            type="text"
+          />
+          <ElementCaption
+            text={
+              <>
+                By default plugin uses{" "}
+                <a href="https://corsproxy.io/" target="_blank">
+                  corsproxy.io
+                </a>{" "}
+                to fetch JSON files and images from the web. You can change it
+                to your own proxy server. If you don't want to use proxy server,
+                just leave this field empty.
+              </>
+            }
+          />
         </SectionWrapper>
 
         <SectionWrapper title="">

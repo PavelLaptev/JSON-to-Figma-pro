@@ -3,7 +3,7 @@ import * as React from "react";
 import styles from "./styles.module.scss";
 
 interface Props {
-  text: string;
+  text: React.ReactNode;
   children?: React.ReactNode;
 }
 

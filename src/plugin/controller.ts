@@ -78,7 +78,7 @@ figma.ui.onmessage = (msg) => {
     const target = figma.currentPage.findOne((n) => n.id === msg.targetID);
     const imageHash = figma.createImage(msg.data).hash;
 
-    console.log(target["fills"]);
+    // console.log(target["fills"]);
 
     const firstFill = target["fills"][0];
 

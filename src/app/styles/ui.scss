@@ -17,6 +17,10 @@ body {
   overflow-x: hidden;
   background-color: var(--clr-background);
 
+  a {
+    color: var(--clr-text);
+  }
+
   &::-webkit-scrollbar {
     width: 0;
     background: transparent;

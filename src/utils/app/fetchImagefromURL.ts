@@ -1,15 +1,15 @@
-import { proxyServer } from "./proxyServer";
+// import proxyServer from "./proxyServer";
 
 export default async function fetchImagefromURL(
   url,
   targetID,
   svgScale: number,
-  index: number
+  index: number,
+  proxyServer: string
 ) {
-  // console.log("fetchImagefromURL", url, targetID, svgScale, index);
-  const encodedURL = encodeURI(url);
+  // console.log("fetchImagefromURL", url, targetID, svgScale, index, proxyServer);
 
-  fetch(`${proxyServer}${encodeURIComponent(encodedURL)}`)
+  fetch(`${proxyServer}${encodeURIComponent(url)}`)
     .then((res) => {
       return res.blob();
     })

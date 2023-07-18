@@ -48,4 +48,5 @@ declare type appConfigType = {
   showShortKeyNames: boolean;
   darkMode: boolean;
   svgScale: number;
+  proxy: string;
 };

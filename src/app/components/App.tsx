@@ -20,7 +20,9 @@ const App = () => {
     showShortKeyNames: false,
     darkMode: false,
     svgScale: 2,
+    proxy: "https://corsproxy.io/?",
   } as appConfigType);
+
   const [JSONconfig, setJSONConfig] = React.useState(null) as [
     JSONconfigType,
     any
@@ -35,7 +37,7 @@ const App = () => {
     const convertedArraysJSON = convertObjectArraysToObjects(clearedFromNull);
     const flattenedJSON = flatObjects(convertedArraysJSON);
 
-    console.log(flattenedJSON);
+    // console.log(flattenedJSON);
 
     const convertedToStates = {
       rootJSONItems: {
@@ -83,7 +85,7 @@ const App = () => {
   const fetchUrlLink = async () => {
     let clipboardLink = execGetClipboard();
 
-    let response = await fetchFromURL(clipboardLink);
+    let response = await fetchFromURL(clipboardLink, appConfig.proxy);
 
     handleJSON(response);
   };
@@ -111,17 +113,21 @@ const App = () => {
     if (message.type === "get-app-settings-storage") {
       // console.log("get app settings", message.data);
       if (message.data) {
+        console.log("app settings", message.data);
         setAppConfig(message.data);
       }
     }
 
     // if image detected
     if (message.type === "image-url") {
+      // console.log("image-url", message.url, appConfig.proxy);
+
       fetchImagefromURL(
         message.url,
         message.targetID,
         appConfig.svgScale,
-        message.index
+        message.index,
+        appConfig.proxy
       );
     }
 
@@ -144,24 +150,17 @@ const App = () => {
     );
   }, []);
 
+  // Handle messages from figma
   React.useEffect(() => {
-    // add onmessage listener
-    window.addEventListener("message", (event) => {
+    window.onmessage = (event) => {
       handleOnMessage(event);
-    });
-
-    // remove onmessage listener
-    return () => {
-      window.removeEventListener("message", (event) => {
-        handleOnMessage(event);
-      });
     };
-  }, [appConfig.svgScale]);
+  }, [appConfig.svgScale, appConfig.proxy]);
 
   useEffectAfterMount(() => {
     if (showAppSettings) {
       parent.postMessage(
-        { pluginMessage: { type: "change-size", frameHeight: 390 } },
+        { pluginMessage: { type: "change-size", frameHeight: 580 } },
         "*"
       );
     } else {
@@ -198,7 +197,10 @@ const App = () => {
           onBackClick={() => setShowAppSettings(false)}
           settings={appConfig}
           onSettingsChange={(newSettings) => {
+            console.log("new settings", newSettings);
+
             setAppConfig(newSettings);
+
             parent.postMessage(
               {
                 pluginMessage: {

@@ -17,9 +17,8 @@ const isRangeValid = (range: string, maxVal: number) => {
 
   if (rangeMatch) {
     const [from, to] = range.split("-").map((num) => parseInt(num, 10));
-    // console.log(from, to, maxVal);
 
-    return from < to && to <= maxVal && from > 0;
+    return from <= to && to <= maxVal && from > 0;
   }
 
   return false;

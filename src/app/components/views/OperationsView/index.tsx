@@ -138,7 +138,7 @@ const OperationsView: React.FunctionComponent<Props> = (props) => {
   const handlePopulateClick = () => {
     // check if there is any selected item
     if (JSONconfig.checkedItems.length === 0) {
-      showFigmaMsg("🚨 Please select at least one item");
+      showFigmaMsg("🚨 Please select at least one JSON item");
       return;
     }
 

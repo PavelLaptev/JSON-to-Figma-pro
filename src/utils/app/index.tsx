@@ -17,3 +17,4 @@ export { default as countChecked } from "./countChecked";
 export { default as getAllChecked } from "./getAllChecked";
 export { default as execCopyToClipboard } from "./execCopyToClipboard";
 export { default as flatObjects } from "./flatObjects";
+export { default as isValidURL } from "./isValidURL";

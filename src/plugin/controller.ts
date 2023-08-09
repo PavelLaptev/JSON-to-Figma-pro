@@ -141,6 +141,7 @@ figma.ui.onmessage = (msg) => {
   // MESSAGE FROM UI ////
   ///////////////////////
   if (msg.type === "showMsg") {
+    // console.log("showMsg", msg.text);
     figmaNotify(msg.text, 3000);
   }
 };

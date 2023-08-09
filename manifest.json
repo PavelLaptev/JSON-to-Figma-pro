@@ -6,5 +6,9 @@
   "ui": "dist/ui.html",
   "relaunchButtons": [{ "command": "open", "name": "JSON to Figma" }],
   "editorType": ["figma"],
-  "permissions": ["payments"]
+  "permissions": ["payments"],
+  "networkAccess": {
+    "allowedDomains": ["*"],
+    "reasoning": "We need to access the internet to fetch the JSON file from the URL or load images and use different proxy servers."
+  }
 }

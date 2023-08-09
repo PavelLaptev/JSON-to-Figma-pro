@@ -14,12 +14,17 @@ export const handleStorage = (msg: any) => {
   }
 
   if (msg.type === "get-json-settings-storage") {
-    figma.clientStorage.getAsync(JSONStorageSection).then((data) => {
-      figma.ui.postMessage({
-        type: "get-json-settings-storage",
-        data: JSON.parse(data) as JSONconfigType,
+    figma.clientStorage
+      .getAsync(JSONStorageSection)
+      .then((data) => {
+        figma.ui.postMessage({
+          type: "get-json-settings-storage",
+          data: JSON.parse(data) as JSONconfigType,
+        });
+      })
+      .catch((err) => {
+        console.warn("PLUGIN >>> get-json-settings-storage", err);
       });
-    });
   }
 
   if (msg.type === "clear-json-settings-storage") {
@@ -33,12 +38,16 @@ export const handleStorage = (msg: any) => {
   }
 
   if (msg.type === "get-app-settings-storage") {
-    figma.clientStorage.getAsync(appStorageSection).then((data) => {
-      // console.log("PLUGIN >>> get-app-settings-storage", data);
-      figma.ui.postMessage({
-        type: "get-app-settings-storage",
-        data: JSON.parse(data) as appConfigType,
+    figma.clientStorage
+      .getAsync(appStorageSection)
+      .then((data) => {
+        figma.ui.postMessage({
+          type: "get-app-settings-storage",
+          data: JSON.parse(data) as appConfigType,
+        });
+      })
+      .catch((err) => {
+        console.warn("PLUGIN >>> get-app-settings-storage", err);
       });
-    });
   }
 };
